@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary-orange: #F26522;
+    --primary-orange-dark: #D94E0E;
+    --secondary-gold: #FEF08A;
+    --secondary-gold-accent: #F59E0B;
+    --bg-cream: #FFFDF9;
+    --bg-offwhite: #FAFAFA;
+    --text-charcoal: #18181B;
+    --text-muted: #64748B;
+  }
+
+  body {
+    background-color: var(--bg-cream);
+    color: var(--text-charcoal);
+    font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+@theme {
+  --color-brand-orange: #F26522;
+  --color-brand-orange-dark: #D94E0E;
+  --color-brand-gold: #FEF08A;
+  --color-brand-amber: #F59E0B;
+  --color-cream-bg: #FFFDF9;
+  --color-offwhite-bg: #FAFAFA;
+  --color-charcoal: #18181B;
+}
+
+/* Custom Effects & Gradients */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(242, 101, 34, 0.15);
+}
+
+.orange-gradient-text {
+  background: linear-gradient(135deg, #F26522 0%, #EF5B25 50%, #D94E0E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.orange-gradient {
+  background: linear-gradient(135deg, #F26522 0%, #EF5B25 60%, #D94E0E 100%);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #FEF08A 0%, #FDE68A 50%, #F59E0B 100%);
+}
+
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(24, 24, 27, 0.8) 0%, rgba(30, 41, 59, 0.85) 60%, rgba(24, 24, 27, 0.95) 100%);
+}
+
+/* Smooth Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFDF9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F26522;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+  will-change: transform;
+}

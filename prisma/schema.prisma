@@ -1,0 +1,99 @@
+// Prisma Schema for Dayanand Arya Vidya Public School
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Faculty {
+  id            String   @id @default(cuid())
+  serialNo      Int
+  name          String
+  designation   String
+  qualification String
+  category      String   @default("TGT")
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model NewsEvent {
+  id          String   @id @default(cuid())
+  title       String
+  date        String
+  category    String
+  excerpt     String
+  fullContent String
+  image       String
+  author      String   @default("Admin")
+  readTime    String   @default("3 min read")
+  createdAt   DateTime @default(now())
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String
+  category  String
+  image     String
+  caption   String
+  date      String
+  createdAt DateTime @default(now())
+}
+
+model AdmissionEnquiry {
+  id          String   @id @default(cuid())
+  studentName String
+  parentName  String
+  phone       String
+  email       String
+  grade       String
+  address     String?
+  status      String   @default("Pending")
+  createdAt   DateTime @default(now())
+}
+
+model Notice {
+  id          String   @id @default(cuid())
+  title       String
+  date        String
+  category    String
+  description String?
+  pdfUrl      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Achievement {
+  id           String   @id @default(cuid())
+  title        String
+  studentName  String
+  category     String
+  achievement  String
+  scoreOrMedal String
+  year         String
+  image        String?
+  quote        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
