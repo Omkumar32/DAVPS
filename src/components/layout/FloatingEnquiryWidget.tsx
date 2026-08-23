@@ -46,10 +46,10 @@ export default function FloatingEnquiryWidget() {
       {/* Sleek Floating Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-14 sm:bottom-[58px] right-4 sm:right-8 z-50 flex items-center gap-2.5 px-5 py-2.5 sm:py-3 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-700 hover:to-amber-600 text-white rounded-xl shadow-2xl shadow-orange-900/40 hover:scale-105 active:scale-95 transition-all group font-black text-xs sm:text-sm uppercase tracking-wider border border-white/20 outline-none focus:outline-none focus:ring-0"
+        className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 px-3.5 py-2 sm:px-5 sm:py-3 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-700 hover:to-amber-600 text-white rounded-xl shadow-2xl shadow-orange-900/40 hover:scale-105 active:scale-95 transition-all group font-black text-[11px] sm:text-sm uppercase tracking-wider border border-white/20 outline-none focus:outline-none focus:ring-0"
         aria-label="Quick Admission Enquiry"
       >
-        <MessageSquare className="w-4 h-4 text-amber-200 group-hover:rotate-12 transition-transform" />
+        <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-200 group-hover:rotate-12 transition-transform" />
         <span>Admissions Enquiry</span>
       </button>
 

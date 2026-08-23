@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { FACULTY_MEMBERS, FacultyMember } from "@/data/facultyData";
 import { NEWS_EVENTS_DATA, NewsItem, GALLERY_DATA, GalleryItem } from "@/data/schoolData";
 
@@ -459,9 +459,8 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
     };
   }, []);
 
-  const updateSettings = async (newSettings: Partial<SiteSettings>): Promise<boolean> => {
-    const updated = { ...settings, ...newSettings };
-    setSettings(updated);
+  const updateSettings = useCallback(async (newSettings: Partial<SiteSettings>): Promise<boolean> => {
+    setSettings((prev) => ({ ...prev, ...newSettings }));
 
     try {
       const res = await fetch("/api/settings", {
@@ -481,14 +480,14 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       alert(`Network/DB Error: ${err?.message || "Failed to connect to server"}`);
       return false;
     }
-  };
+  }, []);
 
-  const resetSettings = () => {
+  const resetSettings = useCallback(() => {
     setSettings(DEFAULT_SETTINGS);
-  };
+  }, []);
 
   // --- NOTICE OPERATIONS ---
-  const addNotice = async (notice: Omit<NoticeItem, "id">) => {
+  const addNotice = useCallback(async (notice: Omit<NoticeItem, "id">) => {
     const tempId = `not-${Date.now()}`;
     const newNotice: NoticeItem = { id: tempId, ...notice };
 
@@ -507,9 +506,9 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
         }
       }
     } catch (err) {}
-  };
+  }, []);
 
-  const updateNotice = (id: string, updatedFields: Partial<NoticeItem>) => {
+  const updateNotice = useCallback((id: string, updatedFields: Partial<NoticeItem>) => {
     setNotices((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
 
     fetch("/api/notices", {
@@ -517,22 +516,22 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, ...updatedFields }),
     }).catch(() => {});
-  };
+  }, []);
 
-  const deleteNotice = async (id: string) => {
+  const deleteNotice = useCallback(async (id: string) => {
     setNotices((prev) => prev.filter((item) => item.id !== id));
 
     try {
       await fetch(`/api/notices?id=${encodeURIComponent(id)}`, { method: "DELETE" });
     } catch (err) {}
-  };
+  }, []);
 
-  const resetNotices = () => {
+  const resetNotices = useCallback(() => {
     setNotices(DEFAULT_NOTICES);
-  };
+  }, []);
 
   // --- ACHIEVEMENT OPERATIONS ---
-  const addAchievement = async (item: Omit<AchievementItem, "id">) => {
+  const addAchievement = useCallback(async (item: Omit<AchievementItem, "id">) => {
     const tempId = `ach-${Date.now()}`;
     const newItem: AchievementItem = { id: tempId, ...item };
 
@@ -551,9 +550,9 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
         }
       }
     } catch (err) {}
-  };
+  }, []);
 
-  const updateAchievement = (id: string, updatedFields: Partial<AchievementItem>) => {
+  const updateAchievement = useCallback((id: string, updatedFields: Partial<AchievementItem>) => {
     setAchievements((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
 
     fetch("/api/achievements", {
@@ -561,22 +560,22 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, ...updatedFields }),
     }).catch(() => {});
-  };
+  }, []);
 
-  const deleteAchievement = async (id: string) => {
+  const deleteAchievement = useCallback(async (id: string) => {
     setAchievements((prev) => prev.filter((item) => item.id !== id));
 
     try {
       await fetch(`/api/achievements?id=${encodeURIComponent(id)}`, { method: "DELETE" });
     } catch (err) {}
-  };
+  }, []);
 
-  const resetAchievements = () => {
+  const resetAchievements = useCallback(() => {
     setAchievements(DEFAULT_ACHIEVEMENTS);
-  };
+  }, []);
 
   // --- PROGRAM OPERATIONS ---
-  const addProgram = async (item: Omit<ProgramItem, "id">) => {
+  const addProgram = useCallback(async (item: Omit<ProgramItem, "id">) => {
     const tempId = `prog-${Date.now()}`;
     const newItem: ProgramItem = { id: tempId, ...item };
 
@@ -595,9 +594,9 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
         }
       }
     } catch (err) {}
-  };
+  }, []);
 
-  const updateProgram = (id: string, updatedFields: Partial<ProgramItem>) => {
+  const updateProgram = useCallback((id: string, updatedFields: Partial<ProgramItem>) => {
     setPrograms((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
 
     fetch("/api/programs", {
@@ -605,22 +604,22 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, ...updatedFields }),
     }).catch(() => {});
-  };
+  }, []);
 
-  const deleteProgram = async (id: string) => {
+  const deleteProgram = useCallback(async (id: string) => {
     setPrograms((prev) => prev.filter((item) => item.id !== id));
 
     try {
       await fetch(`/api/programs?id=${encodeURIComponent(id)}`, { method: "DELETE" });
     } catch (err) {}
-  };
+  }, []);
 
-  const resetPrograms = () => {
+  const resetPrograms = useCallback(() => {
     setPrograms(DEFAULT_PROGRAMS);
-  };
+  }, []);
 
   // --- FACULTY OPERATIONS ---
-  const addFaculty = (member: Omit<FacultyMember, "sno">) => {
+  const addFaculty = useCallback((member: Omit<FacultyMember, "sno">) => {
     setFaculty((prev) => {
       const maxSno = prev.length > 0 ? Math.max(...prev.map((f) => f.sno)) : 0;
       const newMember: FacultyMember = {
@@ -638,9 +637,9 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(member),
     }).catch(() => {});
-  };
+  }, []);
 
-  const updateFaculty = (sno: number, updatedFields: Partial<FacultyMember>) => {
+  const updateFaculty = useCallback((sno: number, updatedFields: Partial<FacultyMember>) => {
     const targetSno = Number(sno);
     setFaculty((prev) => prev.map((f) => (Number(f.sno) === targetSno ? { ...f, ...updatedFields } : f)));
 
@@ -649,21 +648,21 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sno: targetSno, ...updatedFields }),
     }).catch(() => {});
-  };
+  }, []);
 
-  const deleteFaculty = (sno: number) => {
+  const deleteFaculty = useCallback((sno: number) => {
     const targetSno = Number(sno);
     setFaculty((prev) => prev.filter((f) => Number(f.sno) !== targetSno));
 
     fetch(`/api/faculty?sno=${targetSno}`, { method: "DELETE" }).catch(() => {});
-  };
+  }, []);
 
-  const resetFaculty = () => {
+  const resetFaculty = useCallback(() => {
     setFaculty(FACULTY_MEMBERS);
-  };
+  }, []);
 
   // --- NEWS OPERATIONS ---
-  const addNews = (item: Omit<NewsItem, "id">) => {
+  const addNews = useCallback((item: Omit<NewsItem, "id">) => {
     const newItem: NewsItem = {
       ...item,
       id: `news-${Date.now()}`,
@@ -677,9 +676,9 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(item),
     }).catch(() => {});
-  };
+  }, []);
 
-  const updateNews = (id: string, updatedFields: Partial<NewsItem>) => {
+  const updateNews = useCallback((id: string, updatedFields: Partial<NewsItem>) => {
     setNews((prev) => prev.map((n) => (n.id === id ? { ...n, ...updatedFields } : n)));
 
     fetch("/api/news", {
@@ -687,20 +686,20 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, ...updatedFields }),
     }).catch(() => {});
-  };
+  }, []);
 
-  const deleteNews = (id: string) => {
+  const deleteNews = useCallback((id: string) => {
     setNews((prev) => prev.filter((n) => n.id !== id));
 
     fetch(`/api/news?id=${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
-  };
+  }, []);
 
-  const resetNews = () => {
+  const resetNews = useCallback(() => {
     setNews(NEWS_EVENTS_DATA);
-  };
+  }, []);
 
   // --- GALLERY OPERATIONS ---
-  const addGallery = (item: Omit<GalleryItem, "id">) => {
+  const addGallery = useCallback((item: Omit<GalleryItem, "id">) => {
     const newItem: GalleryItem = {
       ...item,
       id: `g-${Date.now()}`,
@@ -713,56 +712,93 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(item),
     }).catch(() => {});
-  };
+  }, []);
 
-  const deleteGallery = (id: string) => {
+  const deleteGallery = useCallback((id: string) => {
     setGallery((prev) => prev.filter((g) => g.id !== id));
 
     fetch(`/api/gallery?id=${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
-  };
+  }, []);
 
-  const resetGallery = () => {
+  const resetGallery = useCallback(() => {
     setGallery(GALLERY_DATA);
-  };
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({
+      settings,
+      updateSettings,
+      resetSettings,
+      notices,
+      addNotice,
+      updateNotice,
+      deleteNotice,
+      resetNotices,
+      achievements,
+      addAchievement,
+      updateAchievement,
+      deleteAchievement,
+      resetAchievements,
+      programs,
+      addProgram,
+      updateProgram,
+      deleteProgram,
+      resetPrograms,
+      faculty,
+      addFaculty,
+      updateFaculty,
+      deleteFaculty,
+      resetFaculty,
+      news,
+      addNews,
+      updateNews,
+      deleteNews,
+      resetNews,
+      gallery,
+      addGallery,
+      deleteGallery,
+      resetGallery,
+      isLoading,
+    }),
+    [
+      settings,
+      updateSettings,
+      resetSettings,
+      notices,
+      addNotice,
+      updateNotice,
+      deleteNotice,
+      resetNotices,
+      achievements,
+      addAchievement,
+      updateAchievement,
+      deleteAchievement,
+      resetAchievements,
+      programs,
+      addProgram,
+      updateProgram,
+      deleteProgram,
+      resetPrograms,
+      faculty,
+      addFaculty,
+      updateFaculty,
+      deleteFaculty,
+      resetFaculty,
+      news,
+      addNews,
+      updateNews,
+      deleteNews,
+      resetNews,
+      gallery,
+      addGallery,
+      deleteGallery,
+      resetGallery,
+      isLoading,
+    ]
+  );
 
   return (
-    <SiteSettingsContext.Provider
-      value={{
-        settings,
-        updateSettings,
-        resetSettings,
-        notices,
-        addNotice,
-        updateNotice,
-        deleteNotice,
-        resetNotices,
-        achievements,
-        addAchievement,
-        updateAchievement,
-        deleteAchievement,
-        resetAchievements,
-        programs,
-        addProgram,
-        updateProgram,
-        deleteProgram,
-        resetPrograms,
-        faculty,
-        addFaculty,
-        updateFaculty,
-        deleteFaculty,
-        resetFaculty,
-        news,
-        addNews,
-        updateNews,
-        deleteNews,
-        resetNews,
-        gallery,
-        addGallery,
-        deleteGallery,
-        resetGallery,
-        isLoading,
-      }}
-    >
+    <SiteSettingsContext.Provider value={contextValue}>
       {children}
     </SiteSettingsContext.Provider>
   );
