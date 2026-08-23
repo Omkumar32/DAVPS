@@ -348,7 +348,7 @@ export const DEFAULT_ACHIEVEMENTS: AchievementItem[] = [];
 
 interface SiteSettingsContextType {
   settings: SiteSettings;
-  updateSettings: (newSettings: Partial<SiteSettings>) => Promise<void>;
+  updateSettings: (newSettings: Partial<SiteSettings>) => Promise<boolean>;
   resetSettings: () => void;
   // Notices
   notices: NoticeItem[];
@@ -459,18 +459,25 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
     };
   }, []);
 
-  const updateSettings = async (newSettings: Partial<SiteSettings>) => {
+  const updateSettings = async (newSettings: Partial<SiteSettings>): Promise<boolean> => {
     const updated = { ...settings, ...newSettings };
     setSettings(updated);
 
     try {
-      await fetch("/api/settings", {
+      const res = await fetch("/api/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ settings: newSettings }),
       });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        console.error("Settings save failed:", data.message || res.status);
+        return false;
+      }
+      return true;
     } catch (err) {
       console.error("Failed to persist settings to DB:", err);
+      return false;
     }
   };
 

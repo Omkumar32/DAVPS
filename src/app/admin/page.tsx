@@ -1030,17 +1030,21 @@ export default function AdminDashboardPage() {
   };
 
   // --- BRANDING ACTIONS ---
-  const handleSaveBranding = (e: React.FormEvent) => {
+  const handleSaveBranding = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateSettings({
+    const success = await updateSettings({
       heroTitle,
       heroSubhead,
       tickerText,
       heroImage,
       schoolLogo,
     });
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 4000);
+    if (success) {
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } else {
+      alert("Error: Database update failed. Please check Vercel environment variables for DATABASE_URL.");
+    }
   };
 
   const handleLogoUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -1049,11 +1053,16 @@ export default function AdminDashboardPage() {
       try {
         const webpUrl = await convertAndUploadWebP(file, { category: "logo", maxWidth: 800, quality: 0.9 });
         setSchoolLogo(webpUrl);
-        updateSettings({ schoolLogo: webpUrl });
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 4000);
+        const success = await updateSettings({ schoolLogo: webpUrl });
+        if (success) {
+          setSavedSuccess(true);
+          setTimeout(() => setSavedSuccess(false), 4000);
+        } else {
+          alert("Error saving logo to database. Please check DATABASE_URL in Vercel settings.");
+        }
       } catch (err) {
         console.error("Logo WebP upload failed:", err);
+        alert("Image processing failed: " + (err as Error).message);
       }
     }
   };
@@ -1064,11 +1073,16 @@ export default function AdminDashboardPage() {
       try {
         const webpUrl = await convertAndUploadWebP(file, { category: "hero", maxWidth: 1400, quality: 0.85 });
         setHeroImage(webpUrl);
-        updateSettings({ heroImage: webpUrl });
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 4000);
+        const success = await updateSettings({ heroImage: webpUrl });
+        if (success) {
+          setSavedSuccess(true);
+          setTimeout(() => setSavedSuccess(false), 4000);
+        } else {
+          alert("Error saving hero banner image to database. Please check DATABASE_URL in Vercel settings.");
+        }
       } catch (err) {
         console.error("Hero image WebP upload failed:", err);
+        alert("Image processing failed: " + (err as Error).message);
       }
     }
   };
