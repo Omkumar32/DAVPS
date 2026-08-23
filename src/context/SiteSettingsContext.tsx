@@ -472,11 +472,13 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       const data = await res.json();
       if (!res.ok || !data.success) {
         console.error("Settings save failed:", data.message || res.status);
+        alert(`Database Error: ${data.message || "Failed to save settings"}`);
         return false;
       }
       return true;
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to persist settings to DB:", err);
+      alert(`Network/DB Error: ${err?.message || "Failed to connect to server"}`);
       return false;
     }
   };

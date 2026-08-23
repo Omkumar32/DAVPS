@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// Allow large base64 image payloads (hero image, logo, etc.)
-export const maxDuration = 30;
-
+// Allow large base64 image payloads
+export const maxDuration = 60;
 
 const DEFAULT_SETTINGS: Record<string, string> = {
   schoolLogo: "",
@@ -169,9 +168,9 @@ export async function GET() {
     });
 
     return NextResponse.json({ success: true, settings: settingsObject, source: "database" });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching site settings from DB:", error);
-    return NextResponse.json({ success: true, settings: DEFAULT_SETTINGS, source: "fallback" });
+    return NextResponse.json({ success: true, settings: DEFAULT_SETTINGS, source: "fallback", error: error?.message });
   }
 }
 
@@ -184,19 +183,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, message: "Invalid settings format" }, { status: 400 });
     }
 
-    const upsertPromises = Object.entries(settings).map(([key, value]) =>
-      prisma.siteSetting.upsert({
+    // Process keys sequentially to prevent exhausting database connections on Supabase
+    for (const [key, value] of Object.entries(settings)) {
+      await prisma.siteSetting.upsert({
         where: { key },
         update: { value: String(value) },
         create: { key, value: String(value) },
-      })
-    );
-
-    await Promise.all(upsertPromises);
+      });
+    }
 
     return NextResponse.json({ success: true, message: "Settings updated successfully" });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error saving site settings to DB:", error);
-    return NextResponse.json({ success: false, message: "Database update failed" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: error?.message || "Database update failed" },
+      { status: 500 }
+    );
   }
 }
