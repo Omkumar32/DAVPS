@@ -12,11 +12,14 @@
     --text-muted: #64748B;
   }
 
+  html,
   body {
     background-color: var(--bg-cream);
     color: var(--text-charcoal);
     font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    width: 100% !important;
     scroll-behavior: smooth;
   }
 }
@@ -72,12 +75,15 @@
   background: #F26522;
 }
 
+/* Fixed Marquee Animation - Uses 100% instead of 100vw to prevent mobile horizontal scrollbar */
 @keyframes marquee {
-  0% { transform: translateX(100vw); }
+  0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
 
 .animate-marquee {
+  display: flex;
+  width: max-content;
   animation: marquee 25s linear infinite;
   will-change: transform;
 }
