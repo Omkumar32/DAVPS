@@ -8,40 +8,25 @@ export async function GET() {
       orderBy: { createdAt: "asc" },
     });
 
-    if (programs.length === 0) {
-      try {
-        await prisma.program.createMany({
-          data: PROGRAMS_DATA.map((p) => ({
-            id: p.id,
-            title: p.title,
-            grades: p.grades,
-            ageGroup: p.ageGroup,
-            description: p.description,
-            features: p.features,
-            image: p.image,
-            iconName: p.iconName || "BookOpen",
-          })),
-          skipDuplicates: true,
-        });
-        programs = await prisma.program.findMany({ orderBy: { createdAt: "asc" } });
-      } catch (seedErr) {
-        return NextResponse.json({ success: true, programs: PROGRAMS_DATA, source: "default" });
+    const mappedPrograms = programs.map((p) => {
+      let parsedFeatures: string[] = [];
+      if (p.features) {
+        try {
+          parsedFeatures = JSON.parse(p.features);
+        } catch (e) {
+          parsedFeatures = [];
+        }
       }
-    }
-
-    const mappedPrograms = programs.map((p) => ({
-      ...p,
-      features: Array.isArray(p.features)
-        ? (p.features as string[])
-        : typeof p.features === "string"
-        ? JSON.parse(p.features)
-        : [],
-    }));
+      return {
+        ...p,
+        features: parsedFeatures,
+      };
+    });
 
     return NextResponse.json({ success: true, programs: mappedPrograms, source: "database" });
   } catch (error) {
     console.error("Error fetching programs from DB:", error);
-    return NextResponse.json({ success: true, programs: PROGRAMS_DATA, source: "fallback" });
+    return NextResponse.json({ success: true, programs: [], source: "fallback" });
   }
 }
 
@@ -54,13 +39,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, message: "Title and grades are required" }, { status: 400 });
     }
 
+    const featuresJson = Array.isArray(features) ? JSON.stringify(features) : JSON.stringify([]);
+
     const newProgram = await prisma.program.create({
       data: {
         title,
         grades,
         ageGroup: ageGroup || "All Ages",
         description: description || "",
-        features: Array.isArray(features) ? features : [],
+        features: featuresJson,
         image: image || "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
         iconName: iconName || "BookOpen",
       },

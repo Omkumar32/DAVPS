@@ -332,6 +332,7 @@ export default function NoticeCalendarSection() {
                       src="/images/notice_board_girl.jpg"
                       alt="No Notice Today"
                       fill
+                      sizes="(max-width: 640px) 256px, 320px"
                       className="object-contain"
                       priority
                     />

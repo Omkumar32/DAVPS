@@ -43,6 +43,7 @@ import { useSiteSettings, NoticeItem, AchievementItem, ProgramItem } from "@/con
 import { GALLERY_DATA, GalleryItem, NEWS_EVENTS_DATA, NewsItem, SALIENT_FEATURES_DATA, SalientFeatureItem } from "@/data/schoolData";
 import { FACULTY_MEMBERS, FacultyMember } from "@/data/facultyData";
 import { FacultySchema, NewsSchema, GallerySchema, SiteSettingsSchema, NoticeSchema, AchievementSchema, ProgramSchema } from "@/lib/adminSchemas";
+import { convertAndUploadWebP } from "@/lib/uploadWebP";
 
 
 export default function AdminDashboardPage() {
@@ -669,25 +670,15 @@ export default function AdminDashboardPage() {
     setFacultyStat4Label(settings.facultyStat4Label || "Qualified Pedagogy");
   }, [settings]);
 
-  const handleFacultyHeroImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFacultyHeroImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1200 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setFacultyHeroImage(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "faculty-hero" });
+        setFacultyHeroImage(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -711,47 +702,27 @@ export default function AdminDashboardPage() {
     setTimeout(() => setFacultySaved(false), 4000);
   };
 
-  const handleDirectorHeroImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleDirectorHeroImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1200 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setDirectorHeroImage(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "director-hero" });
+        setDirectorHeroImage(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
-  const handleDirectorImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleDirectorImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1000 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setDirectorImage(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "director-photo" });
+        setDirectorImage(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -778,47 +749,27 @@ export default function AdminDashboardPage() {
     setTimeout(() => setDirectorSaved(false), 4000);
   };
 
-  const handlePrincipalHeroImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handlePrincipalHeroImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1200 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setPrincipalHeroImage(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "principal-hero" });
+        setPrincipalHeroImage(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
-  const handlePrincipalPhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handlePrincipalPhotoUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1000 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setPrincipalPhoto(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "principal-photo" });
+        setPrincipalPhoto(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -846,47 +797,27 @@ export default function AdminDashboardPage() {
     setTimeout(() => setPrincipalSaved(false), 4000);
   };
 
-  const handleGenInfoHeroImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleGenInfoHeroImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1200 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setGenInfoHeroImage(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "geninfo-hero" });
+        setGenInfoHeroImage(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
-  const handleGenInfoTransImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleGenInfoTransImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 1000 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.85);
-          setGenInfoTransImage(compressed);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "geninfo-trans" });
+        setGenInfoTransImage(webpUrl);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -1112,54 +1043,33 @@ export default function AdminDashboardPage() {
     setTimeout(() => setSavedSuccess(false), 4000);
   };
 
-  const handleLogoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleLogoUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const scale = Math.min(1, 800 / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/png", 0.95);
-          setSchoolLogo(compressed);
-          updateSettings({ schoolLogo: compressed });
-          setSavedSuccess(true);
-          setTimeout(() => setSavedSuccess(false), 4000);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "logo", maxWidth: 800, quality: 0.9 });
+        setSchoolLogo(webpUrl);
+        updateSettings({ schoolLogo: webpUrl });
+        setSavedSuccess(true);
+        setTimeout(() => setSavedSuccess(false), 4000);
+      } catch (err) {
+        console.error("Logo WebP upload failed:", err);
+      }
     }
   };
 
-  const handleHeroImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleHeroImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const MAX_WIDTH = 1200; // Ultra light-weight compressed hero image
-          const scale = Math.min(1, MAX_WIDTH / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL("image/jpeg", 0.75);
-          setHeroImage(compressed);
-          updateSettings({ heroImage: compressed });
-          setSavedSuccess(true);
-          setTimeout(() => setSavedSuccess(false), 4000);
-        };
-        img.src = event.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const webpUrl = await convertAndUploadWebP(file, { category: "hero", maxWidth: 1400, quality: 0.85 });
+        setHeroImage(webpUrl);
+        updateSettings({ heroImage: webpUrl });
+        setSavedSuccess(true);
+        setTimeout(() => setSavedSuccess(false), 4000);
+      } catch (err) {
+        console.error("Hero image WebP upload failed:", err);
+      }
     }
   };
 

@@ -4,36 +4,14 @@ import { NEWS_EVENTS_DATA, NewsItem } from "@/data/schoolData";
 
 export async function GET() {
   try {
-    let news = await prisma.newsEvent.findMany({
+    const news = await prisma.newsEvent.findMany({
       orderBy: { createdAt: "desc" },
     });
-
-    if (news.length === 0) {
-      try {
-        await prisma.newsEvent.createMany({
-          data: NEWS_EVENTS_DATA.map((n) => ({
-            id: n.id,
-            title: n.title,
-            date: n.date,
-            category: n.category,
-            excerpt: n.excerpt,
-            fullContent: n.fullContent,
-            image: n.image,
-            author: n.author || "Academic Coordinator",
-            readTime: n.readTime || "3 min read",
-          })),
-          skipDuplicates: true,
-        });
-        news = await prisma.newsEvent.findMany({ orderBy: { createdAt: "desc" } });
-      } catch (seedErr) {
-        return NextResponse.json({ success: true, news: NEWS_EVENTS_DATA, source: "default" });
-      }
-    }
 
     return NextResponse.json({ success: true, news, source: "database" });
   } catch (error) {
     console.error("Error fetching news from DB:", error);
-    return NextResponse.json({ success: true, news: NEWS_EVENTS_DATA, source: "fallback" });
+    return NextResponse.json({ success: true, news: [], source: "fallback" });
   }
 }
 

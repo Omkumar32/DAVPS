@@ -18,6 +18,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
   title: "Dayanand Arya Vidya Public School, Ranchi | CBSE Affiliated Premium School",
   description:
     "Official website of Dayanand Arya Vidya Public School, Ranchi (Dayanand Arya Vidya Group Of Schools). CBSE Affiliated, state-of-the-art smart classrooms, robotics labs, 5-acre sports ground, and 100% board success rate.",

@@ -68,6 +68,11 @@ export default function HomePage() {
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [heroImgError, setHeroImgError] = useState(false);
+
+  useEffect(() => {
+    setHeroImgError(false);
+  }, [settings.heroImage]);
 
   // 4-Second Auto-Scroll Interval for Testimonials Carousel
   useEffect(() => {
@@ -124,24 +129,22 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Flex-1 Campus Image Container (Uses object-contain object-top so full building & top signboard are 100% visible!) */}
+        {/* Flex-1 Campus Image Container */}
         <div className="relative flex-1 w-full overflow-hidden my-auto bg-slate-50 flex items-center justify-center">
-          {settings.heroImage.startsWith("data:") ? (
-            /* Render Base64 uploaded file image with object-contain object-top */
+          {settings.heroImage && settings.heroImage !== "/placeholder.png" && !heroImgError ? (
+            /* Render uploaded image with object-contain object-top */
             <img
               src={settings.heroImage}
               alt="Dayanand Arya Vidya Public School Building"
               className="w-full h-full object-contain md:object-cover object-top"
+              onError={() => setHeroImgError(true)}
             />
           ) : (
-            <Image
-              src={settings.heroImage}
-              alt="Dayanand Arya Vidya Public School Building"
-              fill
-              priority
-              className="object-contain md:object-cover object-top"
-              sizes="100vw"
-            />
+            <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-8 text-center">
+              <Building2 className="w-16 h-16 mb-2 opacity-50" />
+              <p className="text-sm font-medium">Hero Image Not Uploaded Yet</p>
+              <p className="text-xs text-slate-400">Upload a Hero Banner photo from Admin CMS</p>
+            </div>
           )}
 
           {/* EXACT UNCHANGED Prominent Curvy Wave Overlay */}

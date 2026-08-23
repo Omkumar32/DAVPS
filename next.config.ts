@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
       },
     ],
+    // Allow base64 data URLs for locally uploaded images stored in DB
+    dangerouslyAllowSVG: false,
+    unoptimized: false,
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "8mb",
+    },
   },
 };
 

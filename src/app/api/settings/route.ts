@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// Allow large base64 image payloads (hero image, logo, etc.)
+export const maxDuration = 30;
+
+
 const DEFAULT_SETTINGS: Record<string, string> = {
   schoolLogo: "",
   heroImage: "/placeholder.png",
@@ -156,7 +160,6 @@ export async function GET() {
   try {
     const dbSettings = await prisma.siteSetting.findMany();
     if (dbSettings.length === 0) {
-      // Return default settings
       return NextResponse.json({ success: true, settings: DEFAULT_SETTINGS, source: "default" });
     }
 

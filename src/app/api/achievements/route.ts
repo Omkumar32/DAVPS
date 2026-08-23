@@ -39,36 +39,14 @@ const DEFAULT_ACHIEVEMENTS = [
 
 export async function GET() {
   try {
-    let achievements = await prisma.achievement.findMany({
+    const achievements = await prisma.achievement.findMany({
       orderBy: { createdAt: "desc" },
     });
-
-    if (achievements.length === 0) {
-      try {
-        await prisma.achievement.createMany({
-          data: DEFAULT_ACHIEVEMENTS.map((a) => ({
-            id: a.id,
-            title: a.title,
-            studentName: a.studentName,
-            category: a.category,
-            achievement: a.achievement,
-            scoreOrMedal: a.scoreOrMedal,
-            year: a.year,
-            image: a.image,
-            quote: a.quote,
-          })),
-          skipDuplicates: true,
-        });
-        achievements = await prisma.achievement.findMany({ orderBy: { createdAt: "desc" } });
-      } catch (seedErr) {
-        return NextResponse.json({ success: true, achievements: DEFAULT_ACHIEVEMENTS, source: "default" });
-      }
-    }
 
     return NextResponse.json({ success: true, achievements, source: "database" });
   } catch (error) {
     console.error("Error fetching achievements from DB:", error);
-    return NextResponse.json({ success: true, achievements: DEFAULT_ACHIEVEMENTS, source: "fallback" });
+    return NextResponse.json({ success: true, achievements: [], source: "fallback" });
   }
 }
 

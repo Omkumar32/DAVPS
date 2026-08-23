@@ -1,6 +1,6 @@
-// Prisma Schema for Dayanand Arya Vidya Public School (MySQL)
+// Prisma Schema for Dayanand Arya Vidya Public School (PostgreSQL - Supabase)
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ model User {
 model SiteSetting {
   id        String   @id @default(cuid())
   key       String   @unique
-  value     String   @db.LongText
+  value     String   @db.Text
   updatedAt DateTime @updatedAt
 }
 
@@ -32,7 +32,7 @@ model Faculty {
   designation   String
   qualification String
   category      String   @default("TGT")
-  image         String?  @db.LongText
+  image         String?  @db.Text
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -43,8 +43,8 @@ model NewsEvent {
   date        String
   category    String
   excerpt     String   @db.Text
-  fullContent String   @db.LongText
-  image       String   @db.LongText
+  fullContent String   @db.Text
+  image       String   @db.Text
   author      String   @default("Admin")
   readTime    String   @default("3 min read")
   createdAt   DateTime @default(now())
@@ -54,7 +54,7 @@ model GalleryItem {
   id        String   @id @default(cuid())
   title     String
   category  String
-  image     String   @db.LongText
+  image     String   @db.Text
   caption   String   @db.Text
   date      String
   createdAt DateTime @default(now())
@@ -78,7 +78,7 @@ model Notice {
   date        String
   category    String
   description String?  @db.Text
-  pdfUrl      String?  @db.LongText
+  pdfUrl      String?  @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -91,7 +91,7 @@ model Achievement {
   achievement  String   @db.Text
   scoreOrMedal String
   year         String
-  image        String?  @db.LongText
+  image        String?  @db.Text
   quote        String?  @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -103,8 +103,8 @@ model Program {
   grades      String
   ageGroup    String
   description String   @db.Text
-  features    Json?
-  image       String   @db.LongText
+  features    String?  @db.Text
+  image       String   @db.Text
   iconName    String?  @default("BookOpen")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

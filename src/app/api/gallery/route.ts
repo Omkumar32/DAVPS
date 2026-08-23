@@ -4,33 +4,14 @@ import { GALLERY_DATA, GalleryItem } from "@/data/schoolData";
 
 export async function GET() {
   try {
-    let gallery = await prisma.galleryItem.findMany({
+    const gallery = await prisma.galleryItem.findMany({
       orderBy: { createdAt: "desc" },
     });
-
-    if (gallery.length === 0) {
-      try {
-        await prisma.galleryItem.createMany({
-          data: GALLERY_DATA.map((g) => ({
-            id: g.id,
-            title: g.title,
-            category: g.category,
-            image: g.image,
-            caption: g.caption,
-            date: g.date || "2026",
-          })),
-          skipDuplicates: true,
-        });
-        gallery = await prisma.galleryItem.findMany({ orderBy: { createdAt: "desc" } });
-      } catch (seedErr) {
-        return NextResponse.json({ success: true, gallery: GALLERY_DATA, source: "default" });
-      }
-    }
 
     return NextResponse.json({ success: true, gallery, source: "database" });
   } catch (error) {
     console.error("Error fetching gallery from DB:", error);
-    return NextResponse.json({ success: true, gallery: GALLERY_DATA, source: "fallback" });
+    return NextResponse.json({ success: true, gallery: [], source: "fallback" });
   }
 }
 

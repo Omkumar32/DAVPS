@@ -4,28 +4,9 @@ import { FACULTY_MEMBERS } from "@/data/facultyData";
 
 export async function GET() {
   try {
-    let faculty = await prisma.faculty.findMany({
+    const faculty = await prisma.faculty.findMany({
       orderBy: { serialNo: "asc" },
     });
-
-    if (faculty.length === 0) {
-      try {
-        await prisma.faculty.createMany({
-          data: FACULTY_MEMBERS.map((f) => ({
-            serialNo: f.sno,
-            name: f.name,
-            designation: f.designation,
-            qualification: f.highestQualification,
-            category: f.designation === "PRINCIPAL" ? "PRINCIPAL" : f.designation.includes("PGT") ? "PGT" : f.designation.includes("PRT") ? "PRT" : f.designation.includes("PTI") ? "PTI" : "TGT",
-            image: f.image || "/placeholder.png",
-          })),
-          skipDuplicates: true,
-        });
-        faculty = await prisma.faculty.findMany({ orderBy: { serialNo: "asc" } });
-      } catch (seedErr) {
-        return NextResponse.json({ success: true, faculty: FACULTY_MEMBERS, source: "default" });
-      }
-    }
 
     // Map to FacultyMember format expected by frontend
     const mappedFaculty = faculty.map((f) => ({

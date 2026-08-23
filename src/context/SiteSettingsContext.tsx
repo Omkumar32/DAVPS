@@ -340,115 +340,11 @@ const DEFAULT_SETTINGS: SiteSettings = {
   facultyStat4Label: "Qualified Pedagogy",
 };
 
-export const DEFAULT_PROGRAMS: ProgramItem[] = [
-  {
-    id: "pre-primary",
-    title: "Pre-Primary Wing (Nursery - UKG)",
-    grades: "Nursery to UKG",
-    ageGroup: "3 - 5 Years",
-    description: "Play-based, child-centric foundation emphasizing sensory learning, social skills, and creative play in safe, vibrant spaces.",
-    features: ["Montessori & Play-Way Method", "Phonetics & Early Numeracy", "Kinesthetic Activity Rooms", "Nutritional Snack Guidance"],
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
-    iconName: "Baby"
-  },
-  {
-    id: "primary",
-    title: "Primary Wing (Class I - V)",
-    grades: "Grade 1 to 5",
-    ageGroup: "6 - 10 Years",
-    description: "Fostering inquiry, critical thinking, language fluency, and core numeracy along with arts, music, and physical education.",
-    features: ["Experiential Learning Modules", "Language Proficiency Labs", "Robotics & Basic Coding", "Environmental Studies Projects"],
-    image: "https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800&auto=format&fit=crop",
-    iconName: "BookOpen"
-  },
-  {
-    id: "middle",
-    title: "Middle Wing (Class VI - VIII)",
-    grades: "Grade 6 to 8",
-    ageGroup: "11 - 13 Years",
-    description: "Deepening subject conceptualization, scientific temperament, analytical skills, inter-school competitions, and leadership.",
-    features: ["Advanced Integrated Science Labs", "Third Language Options (Sanskrit/French)", "Olympiad Coaching", "Club & House System"],
-    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
-    iconName: "Brain"
-  },
-  {
-    id: "secondary",
-    title: "Secondary Wing (Class IX - X)",
-    grades: "Grade 9 to 10",
-    ageGroup: "14 - 15 Years",
-    description: "Rigorous CBSE curriculum preparation coupled with career counseling, skill subjects, and intensive academic mentorship.",
-    features: ["Board Examination Preparation", "AI & Information Technology Skill Subjects", "Regular Mock Assessments", "Personalized Counseling"],
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
-    iconName: "GraduationCap"
-  },
-  {
-    id: "senior-secondary",
-    title: "Senior Secondary (Class XI - XII)",
-    grades: "Grade 11 to 12",
-    ageGroup: "16 - 17 Years",
-    description: "Specialized streams in Science, Commerce, and Humanities paired with competitive exam foundation (JEE, NEET, CUET, CLAT).",
-    features: ["Science (PCM / PCB)", "Commerce with Financial Markets", "Humanities & Applied Psychology", "Integrated Test Series"],
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
-    iconName: "Award"
-  }
-];
+export const DEFAULT_PROGRAMS: ProgramItem[] = [];
 
-export const DEFAULT_NOTICES: NoticeItem[] = [
-  { id: "not-1", date: "2026-08-04", title: "Admissions Open 2026-27 for Nursery to Class XI", category: "Admissions", description: "Official admissions announcement for academic session 2026-27." },
-  { id: "not-2", date: "2026-08-04", title: "Independence Day Cultural Practice Schedule", category: "Events", description: "Rehearsal schedules for students participating in cultural activities." },
-  { id: "not-3", date: "2026-08-05", title: "Parent Teacher Meeting (PTM) for Grades 9 & 10", category: "Academic", description: "Mandatory interactive PTM session regarding term exams and CBSE board guidelines." },
-  { id: "not-4", date: "2026-08-15", title: "Independence Day Flag Hoisting & Science Exhibition 2026", category: "Celebration", description: "Grand Independence Day celebrations followed by inter-house science model competition." },
-  { id: "not-5", date: "2026-08-20", title: "CBSE Board Examination Registration Fee Submission Notice", category: "CBSE Board", description: "Important circular regarding CBSE Class 10 & 12 board registration documentation and fees." },
-  { id: "not-6", date: "2026-08-30", title: "Mid-Term Examination Date Sheet Released (Classes I to XII)", category: "Exams", description: "Download the complete mid-term examination timetable and syllabus breakdown." },
-  { id: "not-7", date: "2026-08-31", title: "Annual Inter-House Sports Competition Trial Registration", category: "Sports", description: "Trial registration open for athletics, football, cricket, basketball, and badminton." },
-];
+export const DEFAULT_NOTICES: NoticeItem[] = [];
 
-export const DEFAULT_ACHIEVEMENTS: AchievementItem[] = [
-  {
-    id: "ach-1",
-    title: "CBSE Class XII State Topper",
-    studentName: "Aarav Sharma",
-    category: "Board Exam",
-    achievement: "Secured 99.2% in CBSE Class XII Science Stream with 100 in Mathematics & Physics.",
-    scoreOrMedal: "99.2%",
-    year: "2025",
-    image: "",
-    quote: "The teachers at Dayanand Arya Vidya gave me constant guidance and personalized mock test analysis."
-  },
-  {
-    id: "ach-2",
-    title: "National Cyber Olympiad Gold Medalist",
-    studentName: "Ananya Roy",
-    category: "Olympiad",
-    achievement: "Rank 1 International Cyber Olympiad across 12,000+ participating schools.",
-    scoreOrMedal: "AIR 1",
-    year: "2025",
-    image: "",
-    quote: "Our school's smart computer lab enabled me to practice advanced algorithmic problems daily."
-  },
-  {
-    id: "ach-3",
-    title: "JEE Advanced Top 500 Selection",
-    studentName: "Rohan Verma",
-    category: "Innovation",
-    achievement: "Secured All India Rank 342 in JEE Advanced 2025 and qualified for IIT Bombay CS.",
-    scoreOrMedal: "AIR 342",
-    year: "2025",
-    image: "",
-    quote: "The integrated coaching modules and weekend problem sessions made all the difference."
-  },
-  {
-    id: "ach-4",
-    title: "CBSE National Athletics Championship",
-    studentName: "Priya Singh",
-    category: "Sports",
-    achievement: "Gold Medal in Under-19 Girls 400m Athletics Championship.",
-    scoreOrMedal: "Gold Medal",
-    year: "2024",
-    image: "",
-    quote: "Our physical education department gave me world-class training facilities and encouragement."
-  }
-];
+export const DEFAULT_ACHIEVEMENTS: AchievementItem[] = [];
 
 interface SiteSettingsContextType {
   settings: SiteSettings;
@@ -494,14 +390,6 @@ interface SiteSettingsContextType {
 
 const SiteSettingsContext = createContext<SiteSettingsContextType | undefined>(undefined);
 
-const STORAGE_KEY = "dayanand_school_settings_v5";
-const NOTICES_STORAGE_KEY = "dayanand_school_notices_v1";
-const ACHIEVEMENTS_STORAGE_KEY = "dayanand_school_achievements_v1";
-const PROGRAMS_STORAGE_KEY = "dayanand_school_programs_v1";
-const FACULTY_STORAGE_KEY = "dayanand_school_faculty_v1";
-const NEWS_STORAGE_KEY = "dayanand_school_news_v1";
-const GALLERY_STORAGE_KEY = "dayanand_school_gallery_v1";
-
 export function SiteSettingsProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
   const [notices, setNotices] = useState<NoticeItem[]>(DEFAULT_NOTICES);
@@ -512,121 +400,52 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   const [gallery, setGallery] = useState<GalleryItem[]>(GALLERY_DATA);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Load cached data from localStorage immediately on mount for instantaneous rendering
-  useEffect(() => {
-    try {
-      const savedSettings = localStorage.getItem(STORAGE_KEY);
-      if (savedSettings) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(savedSettings) });
-
-      const savedNotices = localStorage.getItem(NOTICES_STORAGE_KEY);
-      if (savedNotices) setNotices(JSON.parse(savedNotices));
-
-      const savedAchievements = localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY);
-      if (savedAchievements) setAchievements(JSON.parse(savedAchievements));
-
-      const savedPrograms = localStorage.getItem(PROGRAMS_STORAGE_KEY);
-      if (savedPrograms) setPrograms(JSON.parse(savedPrograms));
-
-      const savedFaculty = localStorage.getItem(FACULTY_STORAGE_KEY);
-      if (savedFaculty) setFaculty(JSON.parse(savedFaculty));
-
-      const savedNews = localStorage.getItem(NEWS_STORAGE_KEY);
-      if (savedNews) setNews(JSON.parse(savedNews));
-
-      const savedGallery = localStorage.getItem(GALLERY_STORAGE_KEY);
-      if (savedGallery) setGallery(JSON.parse(savedGallery));
-    } catch (e) {
-      console.warn("Could not load cached settings", e);
-    }
-  }, []);
-
-  // Fetch initial data from DB API routes concurrently in background with fast timeout
+  // Fetch initial data directly from Database API routes
   useEffect(() => {
     let isMounted = true;
     async function loadData() {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
-
       try {
-        const fetchOptions = { signal: controller.signal };
         const [settingsRes, noticesRes, achRes, progRes, facRes, newsRes, galRes] = await Promise.allSettled([
-          fetch("/api/settings", fetchOptions).then((r) => r.ok ? r.json() : null),
-          fetch("/api/notices", fetchOptions).then((r) => r.ok ? r.json() : null),
-          fetch("/api/achievements", fetchOptions).then((r) => r.ok ? r.json() : null),
-          fetch("/api/programs", fetchOptions).then((r) => r.ok ? r.json() : null),
-          fetch("/api/faculty", fetchOptions).then((r) => r.ok ? r.json() : null),
-          fetch("/api/news", fetchOptions).then((r) => r.ok ? r.json() : null),
-          fetch("/api/gallery", fetchOptions).then((r) => r.ok ? r.json() : null),
+          fetch("/api/settings").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/notices").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/achievements").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/programs").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/faculty").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/news").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/gallery").then((r) => (r.ok ? r.json() : null)),
         ]);
-
-        clearTimeout(timeoutId);
 
         if (!isMounted) return;
 
         if (settingsRes.status === "fulfilled" && settingsRes.value?.settings) {
           setSettings({ ...DEFAULT_SETTINGS, ...settingsRes.value.settings });
-          try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(settingsRes.value.settings));
-          } catch (e) {}
         }
 
         if (noticesRes.status === "fulfilled" && Array.isArray(noticesRes.value?.notices)) {
           setNotices(noticesRes.value.notices);
-          try {
-            localStorage.setItem(NOTICES_STORAGE_KEY, JSON.stringify(noticesRes.value.notices));
-          } catch (e) {}
         }
 
         if (achRes.status === "fulfilled" && Array.isArray(achRes.value?.achievements)) {
           setAchievements(achRes.value.achievements);
-          try {
-            localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY, JSON.stringify(achRes.value.achievements));
-          } catch (e) {}
         }
 
         if (progRes.status === "fulfilled" && Array.isArray(progRes.value?.programs)) {
           setPrograms(progRes.value.programs);
-          try {
-            localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(progRes.value.programs));
-          } catch (e) {}
         }
 
         if (facRes.status === "fulfilled" && Array.isArray(facRes.value?.faculty)) {
-          const savedFacultyRaw = localStorage.getItem(FACULTY_STORAGE_KEY);
-          let mergedFaculty = facRes.value.faculty;
-          if (savedFacultyRaw) {
-            try {
-              const savedFaculty = JSON.parse(savedFacultyRaw);
-              mergedFaculty = facRes.value.faculty.map((dbMember: any) => {
-                const localMember = savedFaculty.find((l: any) => l.sno === dbMember.sno);
-                if (localMember && localMember.image && (localMember.image.startsWith("data:image") || localMember.image.length > 50)) {
-                  return { ...dbMember, image: localMember.image };
-                }
-                return dbMember;
-              });
-            } catch (e) {}
-          }
-          setFaculty(mergedFaculty);
-          try {
-            localStorage.setItem(FACULTY_STORAGE_KEY, JSON.stringify(mergedFaculty));
-          } catch (e) {}
+          setFaculty(facRes.value.faculty);
         }
 
         if (newsRes.status === "fulfilled" && Array.isArray(newsRes.value?.news)) {
           setNews(newsRes.value.news);
-          try {
-            localStorage.setItem(NEWS_STORAGE_KEY, JSON.stringify(newsRes.value.news));
-          } catch (e) {}
         }
 
         if (galRes.status === "fulfilled" && Array.isArray(galRes.value?.gallery)) {
           setGallery(galRes.value.gallery);
-          try {
-            localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(galRes.value.gallery));
-          } catch (e) {}
         }
       } catch (e) {
-        // Fallback silently if network or timeout
+        console.error("Error loading DB settings:", e);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -640,18 +459,9 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
     };
   }, []);
 
-  const saveToStorage = (key: string, data: any) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(data));
-    } catch (e) {
-      console.warn("Storage write failed for key:", key, e);
-    }
-  };
-
   const updateSettings = async (newSettings: Partial<SiteSettings>) => {
     const updated = { ...settings, ...newSettings };
     setSettings(updated);
-    saveToStorage(STORAGE_KEY, updated);
 
     try {
       await fetch("/api/settings", {
@@ -666,9 +476,6 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
 
   const resetSettings = () => {
     setSettings(DEFAULT_SETTINGS);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (e) {}
   };
 
   // --- NOTICE OPERATIONS ---
@@ -676,11 +483,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
     const tempId = `not-${Date.now()}`;
     const newNotice: NoticeItem = { id: tempId, ...notice };
 
-    setNotices((prev) => {
-      const updated = [newNotice, ...prev];
-      saveToStorage(NOTICES_STORAGE_KEY, updated);
-      return updated;
-    });
+    setNotices((prev) => [newNotice, ...prev]);
 
     try {
       const res = await fetch("/api/notices", {
@@ -698,11 +501,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const updateNotice = (id: string, updatedFields: Partial<NoticeItem>) => {
-    setNotices((prev) => {
-      const updated = prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item));
-      saveToStorage(NOTICES_STORAGE_KEY, updated);
-      return updated;
-    });
+    setNotices((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
 
     fetch("/api/notices", {
       method: "PUT",
@@ -712,11 +511,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const deleteNotice = async (id: string) => {
-    setNotices((prev) => {
-      const updated = prev.filter((item) => item.id !== id);
-      saveToStorage(NOTICES_STORAGE_KEY, updated);
-      return updated;
-    });
+    setNotices((prev) => prev.filter((item) => item.id !== id));
 
     try {
       await fetch(`/api/notices?id=${encodeURIComponent(id)}`, { method: "DELETE" });
@@ -725,7 +520,6 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
 
   const resetNotices = () => {
     setNotices(DEFAULT_NOTICES);
-    saveToStorage(NOTICES_STORAGE_KEY, DEFAULT_NOTICES);
   };
 
   // --- ACHIEVEMENT OPERATIONS ---
@@ -733,11 +527,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
     const tempId = `ach-${Date.now()}`;
     const newItem: AchievementItem = { id: tempId, ...item };
 
-    setAchievements((prev) => {
-      const updated = [newItem, ...prev];
-      saveToStorage(ACHIEVEMENTS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setAchievements((prev) => [newItem, ...prev]);
 
     try {
       const res = await fetch("/api/achievements", {
@@ -755,11 +545,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const updateAchievement = (id: string, updatedFields: Partial<AchievementItem>) => {
-    setAchievements((prev) => {
-      const updated = prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item));
-      saveToStorage(ACHIEVEMENTS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setAchievements((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
 
     fetch("/api/achievements", {
       method: "PUT",
@@ -769,11 +555,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const deleteAchievement = async (id: string) => {
-    setAchievements((prev) => {
-      const updated = prev.filter((item) => item.id !== id);
-      saveToStorage(ACHIEVEMENTS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setAchievements((prev) => prev.filter((item) => item.id !== id));
 
     try {
       await fetch(`/api/achievements?id=${encodeURIComponent(id)}`, { method: "DELETE" });
@@ -782,7 +564,6 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
 
   const resetAchievements = () => {
     setAchievements(DEFAULT_ACHIEVEMENTS);
-    saveToStorage(ACHIEVEMENTS_STORAGE_KEY, DEFAULT_ACHIEVEMENTS);
   };
 
   // --- PROGRAM OPERATIONS ---
@@ -790,11 +571,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
     const tempId = `prog-${Date.now()}`;
     const newItem: ProgramItem = { id: tempId, ...item };
 
-    setPrograms((prev) => {
-      const updated = [...prev, newItem];
-      saveToStorage(PROGRAMS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setPrograms((prev) => [...prev, newItem]);
 
     try {
       const res = await fetch("/api/programs", {
@@ -812,11 +589,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const updateProgram = (id: string, updatedFields: Partial<ProgramItem>) => {
-    setPrograms((prev) => {
-      const updated = prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item));
-      saveToStorage(PROGRAMS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setPrograms((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
 
     fetch("/api/programs", {
       method: "PUT",
@@ -826,11 +599,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const deleteProgram = async (id: string) => {
-    setPrograms((prev) => {
-      const updated = prev.filter((item) => item.id !== id);
-      saveToStorage(PROGRAMS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setPrograms((prev) => prev.filter((item) => item.id !== id));
 
     try {
       await fetch(`/api/programs?id=${encodeURIComponent(id)}`, { method: "DELETE" });
@@ -839,7 +608,6 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
 
   const resetPrograms = () => {
     setPrograms(DEFAULT_PROGRAMS);
-    saveToStorage(PROGRAMS_STORAGE_KEY, DEFAULT_PROGRAMS);
   };
 
   // --- FACULTY OPERATIONS ---
@@ -853,9 +621,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
         subjectTaught: member.subjectTaught || member.designation,
         gender: member.gender || "M/F",
       };
-      const updated = [...prev, newMember];
-      saveToStorage(FACULTY_STORAGE_KEY, updated);
-      return updated;
+      return [...prev, newMember];
     });
 
     fetch("/api/faculty", {
@@ -867,11 +633,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
 
   const updateFaculty = (sno: number, updatedFields: Partial<FacultyMember>) => {
     const targetSno = Number(sno);
-    setFaculty((prev) => {
-      const updated = prev.map((f) => (Number(f.sno) === targetSno ? { ...f, ...updatedFields } : f));
-      saveToStorage(FACULTY_STORAGE_KEY, updated);
-      return updated;
-    });
+    setFaculty((prev) => prev.map((f) => (Number(f.sno) === targetSno ? { ...f, ...updatedFields } : f)));
 
     fetch("/api/faculty", {
       method: "PUT",
@@ -882,18 +644,13 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
 
   const deleteFaculty = (sno: number) => {
     const targetSno = Number(sno);
-    setFaculty((prev) => {
-      const updated = prev.filter((f) => Number(f.sno) !== targetSno);
-      saveToStorage(FACULTY_STORAGE_KEY, updated);
-      return updated;
-    });
+    setFaculty((prev) => prev.filter((f) => Number(f.sno) !== targetSno));
 
     fetch(`/api/faculty?sno=${targetSno}`, { method: "DELETE" }).catch(() => {});
   };
 
   const resetFaculty = () => {
     setFaculty(FACULTY_MEMBERS);
-    saveToStorage(FACULTY_STORAGE_KEY, FACULTY_MEMBERS);
   };
 
   // --- NEWS OPERATIONS ---
@@ -904,11 +661,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       author: item.author || "School Administrator",
       readTime: item.readTime || "3 min read",
     };
-    setNews((prev) => {
-      const updated = [newItem, ...prev];
-      saveToStorage(NEWS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setNews((prev) => [newItem, ...prev]);
 
     fetch("/api/news", {
       method: "POST",
@@ -918,11 +671,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const updateNews = (id: string, updatedFields: Partial<NewsItem>) => {
-    setNews((prev) => {
-      const updated = prev.map((n) => (n.id === id ? { ...n, ...updatedFields } : n));
-      saveToStorage(NEWS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setNews((prev) => prev.map((n) => (n.id === id ? { ...n, ...updatedFields } : n)));
 
     fetch("/api/news", {
       method: "PUT",
@@ -932,18 +681,13 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const deleteNews = (id: string) => {
-    setNews((prev) => {
-      const updated = prev.filter((n) => n.id !== id);
-      saveToStorage(NEWS_STORAGE_KEY, updated);
-      return updated;
-    });
+    setNews((prev) => prev.filter((n) => n.id !== id));
 
     fetch(`/api/news?id=${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
   };
 
   const resetNews = () => {
     setNews(NEWS_EVENTS_DATA);
-    saveToStorage(NEWS_STORAGE_KEY, NEWS_EVENTS_DATA);
   };
 
   // --- GALLERY OPERATIONS ---
@@ -953,11 +697,7 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
       id: `g-${Date.now()}`,
       date: item.date || "2026",
     };
-    setGallery((prev) => {
-      const updated = [newItem, ...prev];
-      saveToStorage(GALLERY_STORAGE_KEY, updated);
-      return updated;
-    });
+    setGallery((prev) => [newItem, ...prev]);
 
     fetch("/api/gallery", {
       method: "POST",
@@ -967,18 +707,13 @@ export function SiteSettingsProvider({ children }: { children: React.ReactNode }
   };
 
   const deleteGallery = (id: string) => {
-    setGallery((prev) => {
-      const updated = prev.filter((g) => g.id !== id);
-      saveToStorage(GALLERY_STORAGE_KEY, updated);
-      return updated;
-    });
+    setGallery((prev) => prev.filter((g) => g.id !== id));
 
     fetch(`/api/gallery?id=${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
   };
 
   const resetGallery = () => {
     setGallery(GALLERY_DATA);
-    saveToStorage(GALLERY_STORAGE_KEY, GALLERY_DATA);
   };
 
   return (
