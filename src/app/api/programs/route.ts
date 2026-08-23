@@ -12,7 +12,7 @@ export async function GET() {
       let parsedFeatures: string[] = [];
       if (p.features) {
         try {
-          parsedFeatures = JSON.parse(p.features);
+          parsedFeatures = JSON.parse(String(p.features));
         } catch (e) {
           parsedFeatures = [];
         }
