@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Menu, X, ChevronRight, ChevronDown, PhoneCall } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
-import { prefetchUserIntent } from "@/lib/prefetchIntent";
 
 const NAV_LINKS = [
   { name: "Home", href: "/" },
@@ -44,11 +43,6 @@ export default function Navbar() {
   const { settings } = useSiteSettings();
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
-
-  const handleIntent = (href: string) => {
-    prefetchUserIntent(href, router.prefetch);
-  };
 
   useEffect(() => {
     setIsOpen(false);
@@ -61,15 +55,10 @@ export default function Navbar() {
           
           {/* Logo & School Name */}
           <div className="flex items-center shrink-0">
-            <Link
-              href="/"
-              onMouseEnter={() => handleIntent("/")}
-              onTouchStart={() => handleIntent("/")}
-              className="flex items-center gap-1.5 sm:gap-2 group py-1"
-            >
+            <Link href="/" className="flex items-center gap-1.5 sm:gap-2 group py-1">
               {settings.schoolLogo ? (
                 /* Custom Uploaded School Logo */
-                <div className="relative h-11 w-11 sm:h-[60px] sm:w-[60px] xl:h-[64px] xl:w-[64px] shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div className="relative h-14 w-14 sm:h-[64px] sm:w-[64px] xl:h-[64px] xl:w-[64px] shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform">
                   <img
                     src={settings.schoolLogo}
                     alt="Dayanand Arya Vidya Public School Logo"
@@ -78,16 +67,16 @@ export default function Navbar() {
                 </div>
               ) : (
                 /* Professional School Emblem Badge */
-                <div className="w-11 h-11 sm:w-[60px] sm:h-[60px] xl:w-[64px] xl:h-[64px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-400 p-0.5 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
-                  <div className="w-full h-full bg-slate-950 rounded-[10px] sm:rounded-[14px] flex flex-col items-center justify-center text-center p-1 border border-amber-300/40">
-                    <span className="text-[8px] sm:text-[9px] font-black text-amber-400 tracking-wider leading-none">DAV</span>
-                    <span className="text-[6px] sm:text-[7px] font-bold text-white tracking-tight leading-none mt-0.5">MANDAR</span>
+                <div className="w-14 h-14 sm:w-[64px] sm:h-[64px] xl:w-[64px] xl:h-[64px] rounded-2xl bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-400 p-0.5 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
+                  <div className="w-full h-full bg-slate-950 rounded-[14px] flex flex-col items-center justify-center text-center p-1 border border-amber-300/40">
+                    <span className="text-[9px] font-black text-amber-400 tracking-wider leading-none">DAV</span>
+                    <span className="text-[7px] font-bold text-white tracking-tight leading-none mt-0.5">MANDAR</span>
                   </div>
                 </div>
               )}
 
-              <div className="flex flex-col text-left py-0.5 max-w-[190px] sm:max-w-[240px] xl:max-w-[200px] 2xl:max-w-[280px] shrink-0">
-                <span className="text-[11px] sm:text-sm xl:text-[13px] 2xl:text-base font-black text-slate-900 tracking-tight leading-tight uppercase group-hover:text-orange-600 transition-colors line-clamp-2">
+              <div className="flex flex-col text-left py-0.5 max-w-[170px] sm:max-w-[220px] xl:max-w-[200px] 2xl:max-w-[280px] shrink-0">
+                <span className="text-xs sm:text-sm xl:text-[13px] 2xl:text-base font-black text-slate-900 tracking-tight leading-tight uppercase group-hover:text-orange-600 transition-colors">
                   {settings.heroTitle}
                 </span>
               </div>
@@ -110,8 +99,6 @@ export default function Navbar() {
                   <div key={link.href} className="relative group py-2">
                     <Link
                       href={link.href}
-                      onMouseEnter={() => handleIntent(link.href)}
-                      onTouchStart={() => handleIntent(link.href)}
                       className={cn(
                         "text-xs xl:text-[13px] 2xl:text-[14.5px] font-black tracking-tight transition-all relative py-2 px-1 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                         isActive
@@ -132,8 +119,6 @@ export default function Navbar() {
                         <Link
                           key={sub.href}
                           href={sub.href}
-                          onMouseEnter={() => handleIntent(sub.href)}
-                          onTouchStart={() => handleIntent(sub.href)}
                           className="flex items-center justify-between px-4 py-2.5 text-xs font-black text-slate-800 hover:bg-orange-50 hover:text-orange-600 transition-all rounded-xl mx-1"
                         >
                           <span>{sub.name}</span>
@@ -149,8 +134,6 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onMouseEnter={() => handleIntent(link.href)}
-                  onTouchStart={() => handleIntent(link.href)}
                   className={cn(
                     "text-xs xl:text-[13px] 2xl:text-[14.5px] font-black tracking-tight transition-all relative py-2 px-1 whitespace-nowrap",
                     isActive
@@ -175,16 +158,12 @@ export default function Navbar() {
             <div className="flex items-center gap-1.5 shrink-0">
               <Link
                 href="/contact"
-                onMouseEnter={() => handleIntent("/contact")}
-                onTouchStart={() => handleIntent("/contact")}
                 className="hidden sm:inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg text-[10.5px] xl:text-[11px] font-black uppercase tracking-wider whitespace-nowrap bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm transition-all hover:scale-105 shrink-0"
               >
                 Careers
               </Link>
               <Link
                 href="/admissions"
-                onMouseEnter={() => handleIntent("/admissions")}
-                onTouchStart={() => handleIntent("/admissions")}
                 className="hidden sm:inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg text-[10.5px] xl:text-[11px] font-black uppercase tracking-wider whitespace-nowrap bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm transition-all hover:scale-105 shrink-0"
               >
                 Apply Now
@@ -220,8 +199,6 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      onTouchStart={() => handleIntent(link.href)}
-                      onMouseEnter={() => handleIntent(link.href)}
                       className={cn(
                         "flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold whitespace-nowrap transition-all",
                         isActive
@@ -240,8 +217,6 @@ export default function Navbar() {
                           key={sub.href}
                           href={sub.href}
                           onClick={() => setIsOpen(false)}
-                          onTouchStart={() => handleIntent(sub.href)}
-                          onMouseEnter={() => handleIntent(sub.href)}
                           className="block px-3 py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-orange-600 hover:bg-orange-50 transition-colors"
                         >
                           • {sub.name}
@@ -257,8 +232,6 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  onTouchStart={() => handleIntent(link.href)}
-                  onMouseEnter={() => handleIntent(link.href)}
                   className={cn(
                     "flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold whitespace-nowrap transition-all",
                     isActive

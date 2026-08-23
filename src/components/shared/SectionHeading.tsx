@@ -1,4 +1,3 @@
-import React from "react";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
@@ -12,7 +11,7 @@ interface SectionHeadingProps {
   className?: string;
 }
 
-function SectionHeadingComponent({
+export default function SectionHeading({
   badge,
   topIcon,
   underlineAccent = false,
@@ -78,5 +77,3 @@ function SectionHeadingComponent({
     </div>
   );
 }
-
-export default React.memo(SectionHeadingComponent);

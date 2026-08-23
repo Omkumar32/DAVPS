@@ -25,7 +25,7 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
     <>
       <TopAnnouncementBar />
       <Navbar />
-      <main className="flex-1 overflow-x-hidden max-w-full w-full">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
       <FloatingEnquiryWidget />
     </>
