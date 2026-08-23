@@ -6,14 +6,24 @@ import { FileText, Download, Calendar as CalendarIcon, ExternalLink, ImageIcon }
 import { useSiteSettings, NoticeItem } from "@/context/SiteSettingsContext";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const YEARS = [2025, 2026, 2027];
 const DAYS_OF_WEEK = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
 export default function NoticeCalendarSection() {
   const { notices } = useSiteSettings();
-  const [selectedYear, setSelectedYear] = useState(2026);
-  const [selectedMonthIdx, setSelectedMonthIdx] = useState(7); // Aug (0-indexed)
-  const [selectedDay, setSelectedDay] = useState(1); // Aug 1
+
+  // Initialize dynamically with Today's Date on page load
+  const [selectedYear, setSelectedYear] = useState<number>(() => new Date().getFullYear());
+  const [selectedMonthIdx, setSelectedMonthIdx] = useState<number>(() => new Date().getMonth());
+  const [selectedDay, setSelectedDay] = useState<number>(() => new Date().getDate());
+
+  const YEARS = [selectedYear - 1, selectedYear, selectedYear + 1];
+
+  const handleJumpToToday = () => {
+    const now = new Date();
+    setSelectedYear(now.getFullYear());
+    setSelectedMonthIdx(now.getMonth());
+    setSelectedDay(now.getDate());
+  };
 
   const monthName = MONTHS[selectedMonthIdx];
   const dateKey = `${selectedYear}-${String(selectedMonthIdx + 1).padStart(2, "0")}-${String(selectedDay).padStart(2, "0")}`;
@@ -29,6 +39,9 @@ export default function NoticeCalendarSection() {
   }, {});
 
   const selectedDateNotices = noticesByDate[dateKey] || [];
+
+  // ... (rest of grid logic) ...
+
 
   // Generate dynamic calendar grid for selectedYear and selectedMonthIdx
   const getCalendarGrid = () => {
@@ -169,9 +182,18 @@ export default function NoticeCalendarSection() {
                   </button>
                 </div>
 
-                <span className="px-5 py-1 rounded-xl bg-white text-orange-600 border border-amber-300 font-black text-sm uppercase tracking-wider shadow-sm">
-                  {monthName} {selectedYear}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="px-4 py-1 rounded-xl bg-white text-orange-600 border border-amber-300 font-black text-sm uppercase tracking-wider shadow-sm">
+                    {monthName} {selectedYear}
+                  </span>
+                  <button
+                    onClick={handleJumpToToday}
+                    className="px-2.5 py-1 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-[11px] transition-all shadow-sm"
+                    title="Jump to Today's Date"
+                  >
+                    Today
+                  </button>
+                </div>
 
                 <div className="flex items-center gap-1.5">
                   <button
