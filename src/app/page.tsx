@@ -251,7 +251,7 @@ export default function HomePage() {
                 </div>
 
                 <ul className="space-y-2 pt-3 border-t border-slate-100">
-                  {(prog.features || []).slice(0, 3).map((f, i) => (
+                  {(Array.isArray(prog.features) ? prog.features : []).slice(0, 3).map((f, i) => (
                     <li key={i} className="flex items-center gap-2 text-xs font-medium text-slate-700">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span>{f}</span>

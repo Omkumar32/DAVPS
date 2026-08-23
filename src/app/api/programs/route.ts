@@ -12,9 +12,16 @@ export async function GET() {
       let parsedFeatures: string[] = [];
       if (p.features) {
         try {
-          parsedFeatures = JSON.parse(String(p.features));
+          const parsed = JSON.parse(String(p.features));
+          if (Array.isArray(parsed)) {
+            parsedFeatures = parsed.map(String);
+          } else if (typeof parsed === "string") {
+            parsedFeatures = [parsed];
+          }
         } catch (e) {
-          parsedFeatures = [];
+          if (typeof p.features === "string") {
+            parsedFeatures = p.features.split(/[\n,]+/).map((s) => s.trim()).filter(Boolean);
+          }
         }
       }
       return {

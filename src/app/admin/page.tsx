@@ -1446,7 +1446,7 @@ export default function AdminDashboardPage() {
       grades: prog.grades,
       ageGroup: prog.ageGroup,
       description: prog.description,
-      featuresText: (prog.features || []).join("\n"),
+      featuresText: (Array.isArray(prog.features) ? prog.features : []).join("\n"),
       image: prog.image,
       iconName: prog.iconName || "BookOpen",
     });
@@ -3443,7 +3443,7 @@ export default function AdminDashboardPage() {
                         </div>
 
                         <ul className="space-y-1.5 pt-3 border-t border-gray-100">
-                          {(prog.features || []).slice(0, 4).map((f, i) => (
+                          {(Array.isArray(prog.features) ? prog.features : []).slice(0, 4).map((f, i) => (
                             <li key={i} className="flex items-center gap-2 text-xs font-medium text-gray-700">
                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                               <span className="truncate">{f}</span>
@@ -3453,7 +3453,7 @@ export default function AdminDashboardPage() {
 
                         <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                            {(prog.features || []).length} Key Features
+                            {(Array.isArray(prog.features) ? prog.features : []).length} Key Features
                           </span>
                           <div className="flex items-center gap-2">
                             <button
