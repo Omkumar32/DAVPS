@@ -97,8 +97,8 @@ export default function NoticeCalendarSection() {
         
         {/* Section Header */}
         <div className="text-center">
-          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight uppercase font-sans">
-            NOTICE SECTION
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Notices & Announcements
           </h2>
         </div>
 

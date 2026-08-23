@@ -4,16 +4,32 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import PageHeader from "@/components/shared/PageHeader";
 import SectionHeading from "@/components/shared/SectionHeading";
-import { FACULTY_MEMBERS, FacultyMember } from "@/data/facultyData";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { FacultyMember } from "@/data/facultyData";
 import { Search, Filter, GraduationCap, Award, BookOpen, UserCheck, LayoutGrid, Table } from "lucide-react";
 
 export default function FacultyPage() {
+  const { faculty, settings } = useSiteSettings();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
+  const heroBadge = settings.facultyHeroBadge || "Dayanand Arya Vidya Public School";
+  const heroTitle = settings.facultyHeroTitle || "Faculty & Teaching Staff";
+  const heroSubtitle = settings.facultyHeroSubtitle || "Meet the 50+ qualified, passionate educators and mentors of Dayanand Arya Vidya Public School.";
+  const heroImage = settings.facultyHeroImage || "";
+
+  const stat1Value = settings.facultyStat1Value || "50+";
+  const stat1Label = settings.facultyStat1Label || "Certified Faculty";
+  const stat2Value = settings.facultyStat2Value || "100%";
+  const stat2Label = settings.facultyStat2Label || "CBSE / OASIS Registered";
+  const stat3Value = settings.facultyStat3Value || "12:1";
+  const stat3Label = settings.facultyStat3Label || "Student-Teacher Ratio";
+  const stat4Value = settings.facultyStat4Value || "M.A / M.Sc / B.Ed";
+  const stat4Label = settings.facultyStat4Label || "Qualified Pedagogy";
+
   const filteredFaculty = useMemo(() => {
-    return FACULTY_MEMBERS.filter((member) => {
+    return faculty.filter((member) => {
       const matchesCategory =
         selectedCategory === "ALL"
           ? true
@@ -72,9 +88,10 @@ export default function FacultyPage() {
       
       {/* PAGE HEADER */}
       <PageHeader
-        title="Faculty & Teaching Staff"
-        subtitle="Meet the 50+ qualified, passionate educators and mentors of Dayanand Arya Vidya Public School."
-        
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        category={heroBadge}
+        bgImage={heroImage}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -82,20 +99,20 @@ export default function FacultyPage() {
         {/* STATS OVERVIEW CARDS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md space-y-1">
-            <span className="text-3xl font-black text-slate-900">50+</span>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Certified Faculty</p>
+            <span className="text-3xl font-black text-slate-900">{stat1Value}</span>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{stat1Label}</p>
           </div>
           <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md space-y-1">
-            <span className="text-3xl font-black text-orange-600">100%</span>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">CBSE / OASIS Registered</p>
+            <span className="text-3xl font-black text-orange-600">{stat2Value}</span>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{stat2Label}</p>
           </div>
           <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md space-y-1">
-            <span className="text-3xl font-black text-amber-600">12:1</span>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Student-Teacher Ratio</p>
+            <span className="text-3xl font-black text-amber-600">{stat3Value}</span>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{stat3Label}</p>
           </div>
           <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md space-y-1">
-            <span className="text-3xl font-black text-emerald-600">M.A / M.Sc / B.Ed</span>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Qualified Pedagogy</p>
+            <span className="text-3xl font-black text-emerald-600">{stat4Value}</span>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{stat4Label}</p>
           </div>
         </div>
 
@@ -125,14 +142,23 @@ export default function FacultyPage() {
                     >
                       {/* Top Image Container */}
                       <div className="relative h-64 sm:h-72 w-full bg-slate-100 overflow-hidden">
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          fill
-                          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                          sizes="350px"
-                        />
-                        <div className="absolute top-3 left-3 px-2.5 py-1 bg-slate-900/80 backdrop-blur-md text-amber-400 font-extrabold text-[10px] uppercase rounded-lg border border-slate-700">
+                        {member.image && member.image.trim() !== "" && member.image !== "/placeholder.png" ? (
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 flex flex-col items-center justify-center space-y-3 p-4 group-hover:scale-105 transition-transform duration-500">
+                            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 p-1 shadow-xl">
+                              <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center text-amber-400 font-serif font-black text-2xl sm:text-3xl border border-amber-400/30">
+                                {member.name.replace(/^(Dr\.|Mr\.|Mrs\.|Ms\.|Er\.)\s*/i, "").split(" ").filter(Boolean).map(n => n[0]).join("").slice(0, 2).toUpperCase()}
+                              </div>
+                            </div>
+                            <span className="text-[11px] font-bold text-slate-400 tracking-widest uppercase">Faculty Member</span>
+                          </div>
+                        )}
+                        <div className="absolute top-3 left-3 px-2.5 py-1 bg-slate-900/80 backdrop-blur-md text-amber-400 font-extrabold text-[10px] uppercase rounded-lg border border-slate-700 z-10">
                           {member.designation}
                         </div>
                       </div>
@@ -189,8 +215,12 @@ export default function FacultyPage() {
                     <tr key={member.sno} className="hover:bg-orange-50/50 transition-colors">
                       <td className="p-4 font-bold text-slate-400">{member.sno}</td>
                       <td className="p-4 font-extrabold text-slate-900 flex items-center gap-3">
-                        <div className="relative w-9 h-9 rounded-full overflow-hidden border border-slate-300 shrink-0">
-                          <Image src={member.image} alt={member.name} fill className="object-cover" />
+                        <div className="relative w-9 h-9 rounded-full overflow-hidden border border-slate-300 shrink-0 flex items-center justify-center bg-slate-900 text-amber-400 font-serif font-bold text-xs shadow-sm">
+                          {member.image && member.image.trim() !== "" && member.image !== "/placeholder.png" ? (
+                            <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <span>{member.name.replace(/^(Dr\.|Mr\.|Mrs\.|Ms\.|Er\.)\s*/i, "").split(" ").filter(Boolean).map(n => n[0]).join("").slice(0, 2).toUpperCase()}</span>
+                          )}
                         </div>
                         <span>{member.name}</span>
                       </td>

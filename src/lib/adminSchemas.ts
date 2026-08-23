@@ -77,3 +77,17 @@ export const AchievementSchema = z.object({
 
 export type AchievementInput = z.infer<typeof AchievementSchema>;
 
+export const ProgramSchema = z.object({
+  id: z.string().optional(),
+  title: z.string().min(2, "Program Title is required"),
+  grades: z.string().min(1, "Grade/Wing level is required"),
+  ageGroup: z.string().min(1, "Age group is required"),
+  description: z.string().min(5, "Program description is required"),
+  features: z.array(z.string()).min(1, "At least one key feature is required"),
+  image: z.string().min(1, "Program image or photo is required"),
+  iconName: z.string().optional(),
+});
+
+export type ProgramInput = z.infer<typeof ProgramSchema>;
+
+

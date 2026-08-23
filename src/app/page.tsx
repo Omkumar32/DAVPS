@@ -35,42 +35,12 @@ import {
   SCHOOL_INFO,
   PROGRAMS_DATA,
   NEWS_EVENTS_DATA,
-  FAQS_DATA
+  FAQS_DATA,
+  WHY_CHOOSE_US_DATA,
+  ADMISSION_STEPS_DATA,
+  TESTIMONIALS_DATA
 } from "@/data/schoolData";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
-
-const WHY_CHOOSE_US = [
-  {
-    icon: Award,
-    title: "Academic Excellence",
-    description: "Consistently delivering 100% CBSE board results with state & national rank holders every single academic year."
-  },
-  {
-    icon: Laptop,
-    title: "Smart Classrooms",
-    description: "70+ digitally enabled interactive smart rooms with fiber internet, 3D visual modules, and AI learning aids."
-  },
-  {
-    icon: Trophy,
-    title: "Sports Infrastructure",
-    description: "5-acre multi-sport complex, synthetic basketball courts, turf football ground, and national-certified athletic coaches."
-  },
-  {
-    icon: Users,
-    title: "Experienced Faculty",
-    description: "180+ highly qualified educators with over 15+ years average teaching mastery, dedicated to student mentorship."
-  },
-  {
-    icon: ShieldCheckIcon,
-    title: "Safe & Secure Campus",
-    description: "24x7 CCTV coverage, bio-metric access control, GPS bus fleet tracking, and trained security personnel."
-  },
-  {
-    icon: HeartHandshake,
-    title: "Holistic Development",
-    description: "30+ active student clubs in robotics, public speaking, music, fine arts, Vedic ethics, and community leadership."
-  }
-];
 
 function ShieldCheckIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -81,74 +51,18 @@ function ShieldCheckIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-const ADMISSION_STEPS = [
-  {
-    step: "01",
-    title: "Enquiry & Campus Tour",
-    desc: "Submit an online enquiry or visit our admissions office for a guided campus walkthrough and counselor interaction."
-  },
-  {
-    step: "02",
-    title: "Registration Form",
-    desc: "Fill out the admission registration form online or offline with basic academic records and birth credentials."
-  },
-  {
-    step: "03",
-    title: "Interaction / Test",
-    desc: "Informal interaction for Pre-Primary, or a baseline aptitude evaluation for Grades 1 to 11."
-  },
-  {
-    step: "04",
-    title: "Confirmation & Welcome",
-    desc: "Receive admission offering letter, complete document verification, fee submission, and uniform kit allotment."
-  }
-];
-
-const TESTIMONIALS = [
-  {
-    id: 1,
-    quote: "Dayanand Arya Vidya Public School has transformed my daughter's confidence. The balance between rigorous academic coaching and traditional values is unmatched in Ranchi.",
-    parentName: "Dr. Vikramaditya Sharma",
-    role: "Parent of Ananya (Class 10 Board Topper)",
-    rating: 5,
-    avatar: "/placeholder.png"
-  },
-  {
-    id: 2,
-    quote: "The teachers are dedicated and caring. The school environment encourages students to achieve their best in academics, sports, and co-curricular activities.",
-    parentName: "Mrs. Neha Kumari",
-    role: "Parent of Aarav (Class 6)",
-    rating: 5,
-    avatar: "/placeholder.png"
-  },
-  {
-    id: 3,
-    quote: "The STEM and AI lab facilities allowed me to build my first robotics project in Grade 9. The guidance from my teachers helped me score AIR 342 in JEE Advanced!",
-    parentName: "Rohan Verma",
-    role: "Alumni (IIT Bombay CS Batch 2025)",
-    rating: 5,
-    avatar: "/placeholder.png"
-  },
-  {
-    id: 4,
-    quote: "The overall discipline and moral environment is outstanding. Teachers focus on developing not only on studies but also on building an all-round personality in every child.",
-    parentName: "Dr. Ananya Sinha",
-    role: "Parent of Rohan (Class 8)",
-    rating: 5,
-    avatar: "/placeholder.png"
-  },
-  {
-    id: 5,
-    quote: "As a working parent, the GPS-tracked bus facility and real-time mobile app updates give me complete peace of mind while my son is at school.",
-    parentName: "Sunita Roy",
-    role: "Parent of Priyansh (Grade 4)",
-    rating: 5,
-    avatar: "/placeholder.png"
-  }
-];
+const ICON_MAP: Record<string, React.ComponentType<any>> = {
+  Award,
+  Laptop,
+  Trophy,
+  Users,
+  ShieldCheck: ShieldCheckIcon,
+  HeartHandshake
+};
 
 export default function HomePage() {
-  const { settings, achievements } = useSiteSettings();
+  const { settings, achievements, programs } = useSiteSettings();
+  const displayPrograms = programs && programs.length > 0 ? programs : PROGRAMS_DATA;
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isTestimonialHovered, setIsTestimonialHovered] = useState(false);
   const [contactSubmitted, setContactSubmitted] = useState(false);
@@ -159,14 +73,30 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setInterval(() => {
       if (!isTestimonialHovered) {
-        setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
+        setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS_DATA.length);
       }
     }, 4000);
     return () => clearInterval(timer);
   }, [isTestimonialHovered]);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentName: contactForm.name,
+          parentName: contactForm.name,
+          phone: contactForm.phone,
+          email: contactForm.email,
+          grade: "General Enquiry",
+          address: contactForm.message,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to post enquiry:", err);
+    }
     setContactSubmitted(true);
     setTimeout(() => {
       setContactSubmitted(false);
@@ -278,231 +208,47 @@ export default function HomePage() {
         </div>
       </section>
 
-
-      {/* 3. WHY CHOOSE US SECTION (BENTO GRID EDITION - WARM SCHOOL THEME) */}
-      <section className="bg-gradient-to-b from-amber-50/80 via-orange-50/30 to-amber-50/80 py-20 border-y border-amber-200/80 relative overflow-hidden">
-        {/* Subtle Warm Background Glows */}
-        <div className="absolute top-1/4 left-10 w-96 h-96 bg-orange-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
-          
-          <div className="text-center space-y-4 max-w-3xl mx-auto">
-            <span className="px-4 py-1.5 rounded-full bg-orange-100 border border-orange-300/80 text-orange-700 text-xs font-black uppercase tracking-widest inline-flex items-center gap-2 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-orange-600" />
-              <span>The DAV Mandar Advantage</span>
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase text-slate-900">
-              Why Choose Dayanand Arya Vidya?
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              We blend traditional Vedic values with cutting-edge STEM education to build a world-class environment where every child excels.
-            </p>
-          </div>
-
-          {/* BENTO GRID CONTAINER */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            {/* Bento Card 1: Academic Excellence (Large 2-Col Hero Card - Dark Luxury Accent) */}
-            <div className="md:col-span-2 bg-gradient-to-br from-slate-950 via-slate-900 to-orange-950 text-white rounded-3xl p-8 border border-slate-800 hover:border-orange-500/50 shadow-2xl relative overflow-hidden group transition-all duration-300 flex flex-col justify-between min-h-[320px]">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-orange-500/20 transition-all" />
-              
-              <div className="space-y-4 relative z-10">
-                <div className="flex items-center justify-between">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-600 to-amber-500 flex items-center justify-center text-slate-950 shadow-lg shadow-orange-600/30 font-black">
-                    <Award className="w-7 h-7 text-slate-950" />
-                  </div>
-                  <span className="px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-extrabold uppercase tracking-wider">
-                    100% CBSE Pass Rate
-                  </span>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-3xl font-black text-white group-hover:text-amber-400 transition-colors">
-                    Academic Excellence & State Rank Holders
-                  </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed max-w-xl">
-                    Consistently delivering outstanding CBSE 10th & 12th board examination results with state rankers, 99%+ scorers, and top admissions into premier IITs, AIIMS, and NITs.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-6 flex flex-wrap items-center gap-2 relative z-10 border-t border-slate-800/80">
-                <span className="px-3 py-1 rounded-xl bg-slate-800/90 text-amber-300 text-xs font-bold border border-slate-700">
-                  🏆 AIR 1 Olympiad Rankers
-                </span>
-                <span className="px-3 py-1 rounded-xl bg-slate-800/90 text-amber-300 text-xs font-bold border border-slate-700">
-                  🎯 Integrated JEE / NEET Prep
-                </span>
-                <span className="px-3 py-1 rounded-xl bg-slate-800/90 text-amber-300 text-xs font-bold border border-slate-700">
-                  📊 1:20 Teacher-Student Ratio
-                </span>
-              </div>
-            </div>
-
-            {/* Bento Card 2: Smart Classrooms & AI (Vertical Card - Warm White Theme) */}
-            <div className="bg-white rounded-3xl p-8 border border-amber-200/90 hover:border-orange-500/50 shadow-xl shadow-amber-950/5 relative overflow-hidden group transition-all duration-300 flex flex-col justify-between min-h-[320px]">
-              <div className="space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center text-orange-600 shadow-md">
-                  <Laptop className="w-7 h-7" />
-                </div>
-                <div className="space-y-2">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-orange-600 bg-amber-100/80 px-2 py-0.5 rounded">70+ Digital Rooms</span>
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-orange-600 transition-colors">
-                    Smart AI-Powered Classrooms
-                  </h3>
-                  <p className="text-slate-600 text-xs leading-relaxed">
-                    Interactive digital smart boards, high-speed fiber internet, and 3D visual learning modules across every classroom.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 space-y-2 border-t border-amber-100">
-                <div className="w-full bg-amber-50/70 rounded-xl p-3 border border-amber-200/60 flex items-center justify-between text-xs">
-                  <span className="text-slate-700 font-bold">Smart Tech Enabled</span>
-                  <span className="font-black text-orange-600">100%</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bento Card 3: 5-Acre Sports Complex (Warm White Theme) */}
-            <div className="bg-white rounded-3xl p-8 border border-amber-200/90 hover:border-orange-500/50 shadow-xl shadow-amber-950/5 relative overflow-hidden group transition-all duration-300 flex flex-col justify-between min-h-[300px]">
-              <div className="space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-600 shadow-md">
-                  <Trophy className="w-7 h-7" />
-                </div>
-                <div className="space-y-2">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-orange-600 bg-amber-100/80 px-2 py-0.5 rounded">5-Acre Arena</span>
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-orange-600 transition-colors">
-                    World-Class Sports Arena
-                  </h3>
-                  <p className="text-slate-600 text-xs leading-relaxed">
-                    Synthetic basketball courts, FIFA-grade turf football arena, cricket pitch, and national-certified athletic coaches.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 flex flex-wrap gap-1.5 border-t border-amber-100">
-                <span className="px-2.5 py-1 rounded-lg bg-amber-50 text-slate-800 text-[11px] font-bold border border-amber-200">⚽ Football Turf</span>
-                <span className="px-2.5 py-1 rounded-lg bg-amber-50 text-slate-800 text-[11px] font-bold border border-amber-200">🏀 Basketball</span>
-                <span className="px-2.5 py-1 rounded-lg bg-amber-50 text-slate-800 text-[11px] font-bold border border-amber-200">🏏 Cricket</span>
-              </div>
-            </div>
-
-            {/* Bento Card 4: Experienced Faculty & Mentorship (2 Col Warm White Theme) */}
-            <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-amber-200/90 hover:border-orange-500/50 shadow-xl shadow-amber-950/5 relative overflow-hidden group transition-all duration-300 flex flex-col justify-between min-h-[300px]">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-lg shadow-orange-600/20 font-black">
-                    <Users className="w-7 h-7 text-white" />
-                  </div>
-                  <div className="text-right bg-amber-50 border border-amber-200 px-3.5 py-1.5 rounded-2xl">
-                    <p className="text-2xl font-black text-orange-600">180+</p>
-                    <p className="text-[10px] uppercase font-bold text-slate-600">Qualified Teachers</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-slate-900 group-hover:text-orange-600 transition-colors">
-                    Master Educators & Personal Mentorship
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed max-w-xl">
-                    Highly experienced faculty with over 15+ years average teaching mastery. Dedicated to continuous student evaluation, doubt clearance sessions, and moral guidance.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 flex items-center gap-6 border-t border-amber-100">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4.5 h-4.5 text-emerald-600" />
-                  <span className="text-xs font-bold text-slate-800">Post-Graduate Faculty</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4.5 h-4.5 text-emerald-600" />
-                  <span className="text-xs font-bold text-slate-800">Weekly Remedial Classes</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bento Card 5: Safe & Secure Campus (Full Width 3 Col Banner - Warm Vibrant Orange Banner) */}
-            <div className="md:col-span-3 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 text-white rounded-3xl p-8 border border-orange-400/40 shadow-xl shadow-orange-600/20 relative overflow-hidden group transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="space-y-3 max-w-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-white text-xs font-black uppercase tracking-wider backdrop-blur-md">
-                  <ShieldCheckIcon className="w-4 h-4 text-white" />
-                  <span>24x7 Safety & Transport</span>
-                </div>
-                <h3 className="text-2xl font-black text-white">
-                  Safe & Secure Campus with GPS Fleet Tracking
-                </h3>
-                <p className="text-amber-50 text-sm leading-relaxed">
-                  24x7 high-definition CCTV coverage across all corridors, bio-metric entry control, trained female attendants, and real-time GPS bus tracking for complete parental peace of mind.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap md:flex-col gap-3 shrink-0">
-                <div className="flex items-center gap-3 bg-slate-950/30 border border-white/20 backdrop-blur-md px-4 py-3 rounded-2xl">
-                  <Bus className="w-5 h-5 text-amber-200" />
-                  <div>
-                    <p className="text-xs font-extrabold text-white">GPS Bus Tracking</p>
-                    <p className="text-[10px] text-amber-100">Live location updates on parent app</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 bg-slate-950/30 border border-white/20 backdrop-blur-md px-4 py-3 rounded-2xl">
-                  <HeartHandshake className="w-5 h-5 text-amber-200" />
-                  <div>
-                    <p className="text-xs font-extrabold text-white">30+ Active Clubs</p>
-                    <p className="text-[10px] text-amber-100">Robotics, Music, Arts, Vedic Ethics</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-
-
-
       {/* 4. ACADEMIC PROGRAMS SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <SectionHeading
-          badge="Educational Journey"
-          title="Academic Programs Tailored for Growth"
-          subtitle="From early childhood discovery to senior secondary board mastery, our curriculum empowers learners at every developmental milestone."
+          title={settings.programsTitle || "Academic Programs"}
+          subtitle={settings.programsSubtitle || "Empowering learners from early childhood discovery to senior secondary mastery."}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PROGRAMS_DATA.map((prog) => (
+          {displayPrograms.map((prog) => (
             <div
               key={prog.id}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 flex flex-col hover:shadow-2xl hover:border-orange-500/40 transition-all duration-300 group"
+              className="bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 flex flex-col justify-between hover:shadow-xl hover:border-orange-500/40 transition-all duration-300 group"
             >
-              <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+              <div className="relative h-44 w-full overflow-hidden bg-slate-900">
                 <Image
-                  src={prog.image}
+                  src={prog.image || "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop"}
                   alt={prog.title}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  unoptimized={prog.image?.startsWith("data:")}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-black uppercase tracking-wider shadow-sm">
-                  {prog.ageGroup}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-slate-900 text-xs font-bold shadow-md">
+                  {prog.grades}
                 </div>
               </div>
 
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                <div className="space-y-2">
-                  <span className="text-xs font-bold text-orange-600 uppercase tracking-widest">{prog.grades}</span>
-                  <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-orange-600 transition-colors">
-                    {prog.title}
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{prog.description}</p>
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+                      {prog.title}
+                    </h3>
+                  </div>
+                  <p className="text-[11px] font-semibold text-orange-600">Age: {prog.ageGroup}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed pt-1">{prog.description}</p>
                 </div>
 
-                <ul className="space-y-1.5 pt-2 border-t border-slate-100">
-                  {prog.features.slice(0, 3).map((f, i) => (
+                <ul className="space-y-2 pt-3 border-t border-slate-100">
+                  {(prog.features || []).slice(0, 3).map((f, i) => (
                     <li key={i} className="flex items-center gap-2 text-xs font-medium text-slate-700">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span>{f}</span>
@@ -512,7 +258,7 @@ export default function HomePage() {
 
                 <Link
                   href="/academics"
-                  className="w-full py-3 rounded-xl bg-amber-50 hover:bg-orange-600 text-slate-800 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all mt-4 border border-amber-200/80"
+                  className="w-full py-2.5 rounded-xl bg-orange-50 hover:bg-orange-600 text-orange-700 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all border border-orange-200/80 mt-2"
                 >
                   <span>Explore Curriculum</span>
                   <ChevronRight className="w-4 h-4" />
@@ -531,9 +277,8 @@ export default function HomePage() {
       {/* 6. ACHIEVEMENTS HIGHLIGHTS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <SectionHeading
-          badge="Hall of Fame"
-          title="Student Achievements & Wall of Honor"
-          subtitle="Our students continuously shine in CBSE board examinations, Olympiads, JEE/NEET competitive admissions, and national sports tournaments."
+          title="Student Achievements"
+          subtitle="Our students shine in CBSE board exams, Olympiads, competitive exams, and sports."
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -603,19 +348,12 @@ export default function HomePage() {
             
             {/* LEFT SIDE: DIRECTOR'S MESSAGE */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="space-y-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 border border-orange-200 text-orange-800 text-xs font-black uppercase tracking-wider shadow-sm">
-                  <Quote className="w-3.5 h-3.5 text-orange-600" />
-                  <span>Director&apos;s Message</span>
-                </div>
+              <div className="space-y-2">
+                <p className="text-base sm:text-lg font-black text-orange-600 uppercase tracking-wider">
+                  Director&apos;s Message
+                </p>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-                  {settings.directorHeading.includes("Brighter Tomorrow") ? (
-                    <>
-                      {settings.directorHeading.split("Brighter Tomorrow")[0]}<span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700">Brighter Tomorrow</span>{settings.directorHeading.split("Brighter Tomorrow")[1] || ""}
-                    </>
-                  ) : (
-                    settings.directorHeading
-                  )}
+                  {settings.directorHeading}
                 </h2>
               </div>
 
@@ -628,7 +366,7 @@ export default function HomePage() {
               <div className="pt-6 border-t border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-600 to-amber-500 text-white font-black text-xl flex items-center justify-center shadow-lg shadow-orange-600/20 border border-amber-300">
-                    DAV
+                    {settings.directorName ? settings.directorName.split(" ").map(n => n[0]).join("") : "DAV"}
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-slate-900">{settings.directorName}</h3>
@@ -663,7 +401,7 @@ export default function HomePage() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">
-                        <span className="text-6xl font-black text-orange-300">{settings.directorName.split(" ").map(n => n[0]).join("")}</span>
+                        <span className="text-6xl font-black text-orange-300">{settings.directorName ? settings.directorName.split(" ").map(n => n[0]).join("") : "DAV"}</span>
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent opacity-85" />
@@ -671,11 +409,13 @@ export default function HomePage() {
 
                   <div className="absolute bottom-0 inset-x-0 p-6 backdrop-blur-md bg-slate-950/85 border-t border-slate-800/80 space-y-1">
                     <p className="text-base font-extrabold text-amber-300">{settings.directorName}</p>
-                    <p className="text-xs text-slate-300">Director, Dayanand Arya Vidya Public School</p>
-                    <div className="flex items-center gap-2 pt-1 text-[11px] text-amber-400 font-medium">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      <span>{settings.directorExperience}</span>
-                    </div>
+                    <p className="text-xs text-slate-300">{settings.directorDesignation}</p>
+                    {settings.directorExperience && (
+                      <div className="flex items-center gap-2 pt-1 text-[11px] text-amber-400 font-medium">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span>{settings.directorExperience}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -694,9 +434,8 @@ export default function HomePage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
           <SectionHeading
-            badge="Clear Your Doubts"
-            title="Frequently Asked Questions (FAQ)"
-            subtitle="Find instant answers to common questions regarding admissions, CBSE curriculum, bus transport safety, and campus facilities."
+            title="Frequently Asked Questions"
+            subtitle="Quick answers to common questions about admissions, curriculum, transport, and facilities."
           />
 
           {/* Grid Layout: Left Help Card + Right Accordion */}
@@ -840,15 +579,11 @@ export default function HomePage() {
           
           {/* Section Heading matching screenshot */}
           <div className="text-center space-y-3 max-w-3xl mx-auto antialiased">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 border border-amber-300/80 text-orange-800 text-xs font-black uppercase tracking-wider shadow-sm">
-              <Star className="w-3.5 h-3.5 fill-orange-600 text-orange-600" />
-              <span>Voices of Satisfaction</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
               What Parents & Students Say
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              Real experiences from our school community about our commitment to academic excellence, values, and holistic development.
+              Real experiences from our school community about academic excellence and values.
             </p>
           </div>
 
@@ -860,10 +595,10 @@ export default function HomePage() {
           >
             {/* Sliding Track */}
             <div className="flex items-center justify-center relative min-h-[320px]">
-              {TESTIMONIALS.map((testimonial, idx) => {
+              {TESTIMONIALS_DATA.map((testimonial, idx) => {
                 // Calculate relative offset from active index for infinite seamless wrap
                 let offset = idx - activeTestimonial;
-                const total = TESTIMONIALS.length;
+                const total = TESTIMONIALS_DATA.length;
                 if (offset < -Math.floor(total / 2)) offset += total;
                 if (offset > Math.floor(total / 2)) offset -= total;
 
@@ -969,7 +704,7 @@ export default function HomePage() {
             <button
               onClick={() =>
                 setActiveTestimonial(
-                  (prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length
+                  (prev) => (prev - 1 + TESTIMONIALS_DATA.length) % TESTIMONIALS_DATA.length
                 )
               }
               className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-orange-600 shadow-xl border border-slate-200 flex items-center justify-center hover:scale-110 hover:bg-orange-600 hover:text-white transition-all z-30 cursor-pointer"
@@ -980,7 +715,7 @@ export default function HomePage() {
 
             <button
               onClick={() =>
-                setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length)
+                setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS_DATA.length)
               }
               className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-orange-600 shadow-xl border border-slate-200 flex items-center justify-center hover:scale-110 hover:bg-orange-600 hover:text-white transition-all z-30 cursor-pointer"
               aria-label="Next Testimonial"
@@ -990,7 +725,7 @@ export default function HomePage() {
 
             {/* Pagination Dots */}
             <div className="flex items-center justify-center gap-2 pt-6">
-              {TESTIMONIALS.map((_, idx) => (
+              {TESTIMONIALS_DATA.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveTestimonial(idx)}
@@ -1011,9 +746,8 @@ export default function HomePage() {
       {/* 10. CONTACT SECTION */}
       <section id="contact-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <SectionHeading
-          badge="Get in Touch"
           title="Visit Our Campus or Send an Enquiry"
-          subtitle="Our admissions desk and administrative office are open Monday through Saturday."
+          subtitle="Our admissions desk and administrative office are open Monday to Saturday."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

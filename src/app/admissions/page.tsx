@@ -3,26 +3,8 @@
 import { useState } from "react";
 import PageHeader from "@/components/shared/PageHeader";
 import SectionHeading from "@/components/shared/SectionHeading";
-import { FAQS_DATA } from "@/data/schoolData";
+import { FAQS_DATA, ELIGIBILITY_DATA, REQUIRED_DOCUMENTS_DATA } from "@/data/schoolData";
 import { ChevronDown, FileCheck, HelpCircle, DollarSign, Calendar, Sparkles } from "lucide-react";
-
-const ELIGIBILITY = [
-  { grade: "Nursery", minAge: "3+ Years", cutoff: "Born on or before 31st March 2023", criteria: "Informal Parent-Child Interaction" },
-  { grade: "LKG & UKG", minAge: "4+ to 5+ Years", cutoff: "Born on or before 31st March 2022", criteria: "Sensory & Verbal Assessment" },
-  { grade: "Grade 1 - 5", minAge: "6+ to 10+ Years", cutoff: "Previous Class Pass Marksheet", criteria: "Baseline Aptitude Test (Eng & Math)" },
-  { grade: "Grade 6 - 9", minAge: "11+ to 14+ Years", cutoff: "Grade 5/8 Passed from Recognized School", criteria: "Written Test (Eng, Math, Science)" },
-  { grade: "Grade 11 (Sci/Comm/Arts)", minAge: "15+ Years", cutoff: "CBSE Class 10 Board Percentage Criteria", criteria: "Class 10 Board Marks + Aptitude Cutoff" },
-];
-
-const DOCUMENTS = [
-  "Attested copy of Child's Birth Certificate issued by Municipal Corporation",
-  "Original Transfer Certificate (TC) countersigned by Education Inspector (Grade 2 upwards)",
-  "Report Card / Marksheet of previous class passed",
-  "Aadhaar Card copy of Student and Parents (Mother & Father)",
-  "4 recent passport-size color photographs of Child and 2 of Parents",
-  "Blood Group & Immunization Medical Certificate signed by Registered Medical Practitioner",
-  "Caste / Category Certificate (if applying under SC/ST/OBC category)",
-];
 
 export default function AdmissionsPage() {
   const [openFaq, setOpenFaq] = useState<string | null>("faq-1");
@@ -60,7 +42,7 @@ export default function AdmissionsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
-                {ELIGIBILITY.map((item, idx) => (
+                {ELIGIBILITY_DATA.map((item, idx) => (
                   <tr key={idx} className="hover:bg-amber-50/50 transition-colors">
                     <td className="py-4 px-6 font-bold text-slate-900">{item.grade}</td>
                     <td className="py-4 px-6 text-orange-600 font-extrabold">{item.minAge}</td>
@@ -89,7 +71,7 @@ export default function AdmissionsPage() {
 
           <div className="bg-white rounded-3xl p-8 shadow-xl border border-amber-100 max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {DOCUMENTS.map((doc, idx) => (
+              {REQUIRED_DOCUMENTS_DATA.map((doc, idx) => (
                 <div key={idx} className="flex items-start gap-3 p-3.5 rounded-2xl bg-amber-50/40 border border-amber-100">
                   <FileCheck className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
                   <span className="text-xs text-slate-800 font-medium leading-relaxed">{doc}</span>
@@ -141,7 +123,6 @@ export default function AdmissionsPage() {
       {/* 4. ADMISSION FAQ ACCORDION */}
       <section id="faqs" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <SectionHeading
-          badge="Clear Your Doubts"
           title="Frequently Asked Questions"
           subtitle="Everything you need to know about school admissions, entrance test, transport, and academics."
         />

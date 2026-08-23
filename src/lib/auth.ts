@@ -1,14 +1,36 @@
 import { cookies } from "next/headers";
-import { verifyAdminCredentials, DEFAULT_ADMIN, AdminUser } from "@/lib/prisma";
+
+export interface AdminUser {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
+export const DEFAULT_ADMIN: AdminUser = {
+  id: "admin-1",
+  email: "admin@dayanandariaschool.edu.in",
+  name: "School Administrator",
+  role: "ADMIN"
+};
+
+export function verifyAdminCredentials(email: string, pass: string): boolean {
+  const normalizedEmail = (email || "").trim().toLowerCase();
+  const validEmail = normalizedEmail === "admin@dayanandariaschool.edu.in" || 
+                     normalizedEmail === "davmandar01@gmail.com" || 
+                     normalizedEmail === "admin";
+  const validPass = pass === "Admin@DAV2026" || pass === "admin123" || pass === "dav2026";
+  return validEmail && validPass;
+}
 
 const ADMIN_SESSION_COOKIE = "dav_admin_session";
 
 export async function getAdminSession(): Promise<AdminUser | null> {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
-  if (!sessionToken) return null;
-
   try {
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
+    if (!sessionToken) return null;
+
     const data = JSON.parse(Buffer.from(sessionToken, "base64").toString("utf8"));
     if (data && data.email) {
       return {

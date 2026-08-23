@@ -2,6 +2,8 @@ import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
   badge?: string;
+  topIcon?: React.ReactNode;
+  underlineAccent?: boolean;
   title: string;
   subtitle?: string;
   centered?: boolean;
@@ -11,6 +13,8 @@ interface SectionHeadingProps {
 
 export default function SectionHeading({
   badge,
+  topIcon,
+  underlineAccent = false,
   title,
   subtitle,
   centered = true,
@@ -20,11 +24,19 @@ export default function SectionHeading({
   return (
     <div
       className={cn(
-        "space-y-3 max-w-3xl mb-12",
+        "space-y-1.5 max-w-3xl mb-2.5 sm:mb-3",
         centered ? "mx-auto text-center" : "text-left",
         className
       )}
     >
+      {topIcon && (
+        <div className="flex items-center justify-center gap-3 pb-1">
+          <div className="h-[1px] w-8 bg-amber-400/80" />
+          <div className="text-amber-500 flex items-center justify-center">{topIcon}</div>
+          <div className="h-[1px] w-8 bg-amber-400/80" />
+        </div>
+      )}
+
       {badge && (
         <span
           className={cn(
@@ -47,6 +59,10 @@ export default function SectionHeading({
       >
         {title}
       </h2>
+
+      {underlineAccent && (
+        <div className="w-10 h-[3px] bg-gradient-to-r from-orange-500 to-amber-500 rounded-full mx-auto my-1.5" />
+      )}
 
       {subtitle && (
         <p

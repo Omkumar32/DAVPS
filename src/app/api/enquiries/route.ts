@@ -18,20 +18,20 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { studentName, parentName, phone, email, grade, address } = body;
 
-    if (!studentName || !parentName || !phone) {
+    if (!parentName || !phone) {
       return NextResponse.json(
-        { success: false, message: "Student Name, Parent Name, and Phone are required" },
+        { success: false, message: "Parent Name and Phone are required" },
         { status: 400 }
       );
     }
 
     const enquiry = await prisma.admissionEnquiry.create({
       data: {
-        studentName,
+        studentName: studentName || "Applicant",
         parentName,
         phone,
         email: email || "",
-        grade: grade || "Nursery",
+        grade: grade || "General",
         address: address || "",
         status: "Pending",
       },
@@ -48,5 +48,52 @@ export async function POST(req: Request) {
       { success: false, message: "Server error. Could not process enquiry." },
       { status: 500 }
     );
+  }
+}
+
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const { id, status } = body;
+
+    if (!id || !status) {
+      return NextResponse.json(
+        { success: false, message: "Enquiry ID and Status are required" },
+        { status: 400 }
+      );
+    }
+
+    const updated = await prisma.admissionEnquiry.update({
+      where: { id },
+      data: { status },
+    });
+
+    return NextResponse.json({ success: true, enquiry: updated });
+  } catch (error) {
+    console.error("Error updating enquiry status in DB:", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to update enquiry status" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ success: false, message: "Enquiry ID is required" }, { status: 400 });
+    }
+
+    await prisma.admissionEnquiry.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ success: true, message: "Enquiry deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting enquiry from DB:", error);
+    return NextResponse.json({ success: false, message: "Failed to delete enquiry" }, { status: 500 });
   }
 }

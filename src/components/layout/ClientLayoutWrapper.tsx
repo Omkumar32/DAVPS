@@ -15,10 +15,7 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
     setMounted(true);
   }, []);
 
-  const isAdminRoute =
-    pathname?.startsWith("/admin") ||
-    pathname?.includes("/admin") ||
-    (typeof window !== "undefined" && window.location.pathname.includes("/admin"));
+  const isAdminRoute = pathname?.startsWith("/admin");
 
   if (isAdminRoute) {
     return <main className="flex-1 min-h-screen bg-slate-950 text-slate-100">{children}</main>;

@@ -9,37 +9,8 @@ export interface FacultyMember {
   image: string;
 }
 
-const MALE_IMAGES = [
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png"
-];
-
-const FEMALE_IMAGES = [
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png",
-  "/placeholder.png"
-];
-
 function getFacultyImage(gender: "M" | "F", sno: number): string {
-  if (gender === "M") {
-    return MALE_IMAGES[(sno - 1) % MALE_IMAGES.length];
-  }
-  return FEMALE_IMAGES[(sno - 1) % FEMALE_IMAGES.length];
+  return "";
 }
 
 export const FACULTY_MEMBERS: FacultyMember[] = [

@@ -3,35 +3,50 @@
 import PageHeader from "@/components/shared/PageHeader";
 import SectionHeading from "@/components/shared/SectionHeading";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { VISION_PILLARS_DATA, VisionPillarItem } from "@/data/schoolData";
 import { Award, Sparkles, GraduationCap, Quote, Star, Compass, ShieldCheck, HeartHandshake } from "lucide-react";
+
+const ICON_MAP: Record<string, React.ComponentType<any>> = {
+  Compass,
+  ShieldCheck,
+  GraduationCap
+};
 
 export default function DirectorMessagePage() {
   const { settings } = useSiteSettings();
 
+  const heroBadge = settings.directorHeroBadge || "Dayanand Arya Vidya Public School";
+  const heroTitle = settings.directorHeroTitle || "Director's Message";
+  const heroSubtitle = settings.directorHeroSubtitle || `From the Desk of Director ${settings.directorName || "Er. Alok Nath Verma"} — Dayanand Arya Vidya Public School`;
+  const heroImage = settings.directorHeroImage || "";
+  const leadershipDesc = settings.directorLeadershipDesc || "Steering Dayanand Arya Vidya Public School with a vision of intellectual rigor, technological excellence, and deep-rooted ethical values.";
+  const location = settings.directorLocation || "Mandar, Ranchi";
+
   return (
-    <div className="space-y-20 pb-20 bg-slate-50/50">
+    <div className="space-y-16 sm:space-y-20 pb-20 bg-slate-50/50">
       
       {/* PAGE HEADER */}
       <PageHeader
-        title="Director's Message"
-        subtitle={`From the Desk of Director ${settings.directorName} — Dayanand Arya Vidya Public School`}
-        
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        category={heroBadge}
+        bgImage={heroImage}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* MAIN DIRECTOR DESK CARD */}
         <section className="space-y-8">
-          <div className="bg-white rounded-3xl p-8 sm:p-14 shadow-2xl border border-slate-200/90 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="bg-white rounded-3xl p-7 sm:p-14 shadow-2xl border border-slate-200/90 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             
             {/* Left Image & Credentials Column */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="relative h-[440px] sm:h-[480px] w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-400">
+              <div className="relative h-[440px] sm:h-[480px] w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-400 bg-slate-900 group">
                 {settings.directorImage ? (
                   <img
                     src={settings.directorImage}
                     alt={`Director ${settings.directorName}`}
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">
@@ -54,7 +69,7 @@ export default function DirectorMessagePage() {
                   <span>{settings.directorExperience}</span>
                 </div>
                 <p className="text-xs text-slate-700 font-medium leading-relaxed">
-                  Steering Dayanand Arya Vidya Public School with a vision of intellectual rigor, technological excellence, and deep-rooted ethical values.
+                  {leadershipDesc}
                 </p>
               </div>
             </div>
@@ -69,13 +84,7 @@ export default function DirectorMessagePage() {
                   <span>Director&apos;s Message</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
-                  {settings.directorHeading.includes("Brighter Tomorrow") ? (
-                    <>
-                      {settings.directorHeading.split("Brighter Tomorrow")[0]}<span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700">Brighter Tomorrow</span>
-                    </>
-                  ) : (
-                    settings.directorHeading
-                  )}
+                  {settings.directorHeading}
                 </h2>
               </div>
 
@@ -84,17 +93,13 @@ export default function DirectorMessagePage() {
                 {settings.directorMessage1 && <p>&ldquo;{settings.directorMessage1}&rdquo;</p>}
                 {settings.directorMessage2 && <p>&ldquo;{settings.directorMessage2}&rdquo;</p>}
                 {settings.directorMessage3 && <p>&ldquo;{settings.directorMessage3}&rdquo;</p>}
-
-                <p className="font-extrabold text-orange-600 text-base sm:text-lg italic pt-2">
-                  &ldquo;We welcome parents to join hands with us as partners in shaping a bright, morally grounded, and successful future for our children.&rdquo;
-                </p>
               </div>
 
               {/* Sign-off Block */}
               <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-600 to-amber-500 text-white font-black text-xl flex items-center justify-center shadow-lg border border-amber-300">
-                    DAV
+                    {settings.directorName ? settings.directorName.split(" ").map(n => n[0]).join("") : "DAV"}
                   </div>
                   <div>
                     <h4 className="text-base font-black text-slate-900">{settings.directorName}</h4>
@@ -105,7 +110,7 @@ export default function DirectorMessagePage() {
 
                 <div className="hidden sm:block text-right">
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block">Affiliated to CBSE</span>
-                  <span className="text-xs font-bold text-slate-700">Mandar, Ranchi</span>
+                  <span className="text-xs font-bold text-slate-700">{location}</span>
                 </div>
               </div>
 
@@ -123,35 +128,20 @@ export default function DirectorMessagePage() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-lg space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
-                <Compass className="w-6 h-6" />
-              </div>
-              <h4 className="text-lg font-black text-slate-900">Modern Scientific Pedagogy</h4>
-              <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Combining interactive teaching methods, critical problem-solving, and continuous evaluation for academic success.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-lg space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h4 className="text-lg font-black text-slate-900">Timeless Vedic Values</h4>
-              <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Instilling moral integrity, discipline (*Anushasan*), truthfulness (*Satya*), and service (*Sewa*) in every learner.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-lg space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                <GraduationCap className="w-6 h-6" />
-              </div>
-              <h4 className="text-lg font-black text-slate-900">State-of-the-Art STEM</h4>
-              <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Equipping students with modern computer labs, smart classrooms, and experimental science facilities.
-              </p>
-            </div>
+            {VISION_PILLARS_DATA.map((pillar: VisionPillarItem, idx: number) => {
+              const IconComp = ICON_MAP[pillar.iconName] || Sparkles;
+              return (
+                <div key={idx} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-lg space-y-3">
+                  <div className={`w-12 h-12 rounded-2xl ${pillar.color} flex items-center justify-center font-bold`}>
+                    <IconComp className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-lg font-black text-slate-900">{pillar.title}</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    {pillar.desc}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </section>
 

@@ -1,6 +1,6 @@
-// Prisma Schema for Dayanand Arya Vidya Public School
+// Prisma Schema for Dayanand Arya Vidya Public School (MySQL)
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ model User {
 model SiteSetting {
   id        String   @id @default(cuid())
   key       String   @unique
-  value     String
+  value     String   @db.LongText
   updatedAt DateTime @updatedAt
 }
 
@@ -32,7 +32,7 @@ model Faculty {
   designation   String
   qualification String
   category      String   @default("TGT")
-  image         String?
+  image         String?  @db.LongText
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -42,9 +42,9 @@ model NewsEvent {
   title       String
   date        String
   category    String
-  excerpt     String
-  fullContent String
-  image       String
+  excerpt     String   @db.Text
+  fullContent String   @db.LongText
+  image       String   @db.LongText
   author      String   @default("Admin")
   readTime    String   @default("3 min read")
   createdAt   DateTime @default(now())
@@ -54,8 +54,8 @@ model GalleryItem {
   id        String   @id @default(cuid())
   title     String
   category  String
-  image     String
-  caption   String
+  image     String   @db.LongText
+  caption   String   @db.Text
   date      String
   createdAt DateTime @default(now())
 }
@@ -67,7 +67,7 @@ model AdmissionEnquiry {
   phone       String
   email       String
   grade       String
-  address     String?
+  address     String?  @db.Text
   status      String   @default("Pending")
   createdAt   DateTime @default(now())
 }
@@ -77,8 +77,8 @@ model Notice {
   title       String
   date        String
   category    String
-  description String?
-  pdfUrl      String?
+  description String?  @db.Text
+  pdfUrl      String?  @db.LongText
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -88,12 +88,24 @@ model Achievement {
   title        String
   studentName  String
   category     String
-  achievement  String
+  achievement  String   @db.Text
   scoreOrMedal String
   year         String
-  image        String?
-  quote        String?
+  image        String?  @db.LongText
+  quote        String?  @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
+model Program {
+  id          String   @id @default(cuid())
+  title       String
+  grades      String
+  ageGroup    String
+  description String   @db.Text
+  features    Json?
+  image       String   @db.LongText
+  iconName    String?  @default("BookOpen")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

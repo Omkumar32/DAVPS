@@ -65,14 +65,14 @@ export default function RootLayout({
   const jsonLd = generateSchoolJsonLd();
 
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased bg-[#FFFDF9] text-slate-900 min-h-screen flex flex-col selection:bg-orange-500 selection:text-white">
+      <body className="font-sans antialiased bg-[#FFFDF9] text-slate-900 min-h-screen flex flex-col selection:bg-orange-500 selection:text-white" suppressHydrationWarning>
         <SiteSettingsProvider>
           <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
         </SiteSettingsProvider>

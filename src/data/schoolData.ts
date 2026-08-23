@@ -97,52 +97,52 @@ export const SCHOOL_INFO = {
 export const PROGRAMS_DATA: Program[] = [
   {
     id: "pre-primary",
-    title: "Pre-Primary Wing (Nursery - UKG)",
-    grades: "Nursery to UKG",
+    title: "Pre-Primary Wing",
+    grades: "Nursery – UKG",
     ageGroup: "3 - 5 Years",
-    description: "Play-based, child-centric foundation emphasizing sensory learning, social skills, and creative play in safe, vibrant spaces.",
-    features: ["Montessori & Play-Way Method", "Phonetics & Early Numeracy", "Kinesthetic Activity Rooms", "Nutritional Snack Guidance"],
-    image: "/placeholder.png",
+    description: "Play-based foundation focusing on sensory, social, and creative early learning.",
+    features: ["Montessori & Play-Way Method", "Phonetics & Early Numeracy", "Kinesthetic Activity Rooms"],
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
     iconName: "Baby"
   },
   {
     id: "primary",
-    title: "Primary Wing (Class I - V)",
-    grades: "Grade 1 to 5",
+    title: "Primary Wing",
+    grades: "Class I – V",
     ageGroup: "6 - 10 Years",
-    description: "Fostering inquiry, critical thinking, language fluency, and core numeracy along with arts, music, and physical education.",
-    features: ["Experiential Learning Modules", "Language Proficiency Labs", "Robotics & Basic Coding", "Environmental Studies Projects"],
-    image: "/placeholder.png",
+    description: "Building strong fundamentals in literacy, numeracy, critical thinking, and inquiry.",
+    features: ["Experiential Learning Modules", "Language Proficiency Labs", "Robotics & Basic Coding"],
+    image: "https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800&auto=format&fit=crop",
     iconName: "BookOpen"
   },
   {
     id: "middle",
-    title: "Middle Wing (Class VI - VIII)",
-    grades: "Grade 6 to 8",
+    title: "Middle Wing",
+    grades: "Class VI – VIII",
     ageGroup: "11 - 13 Years",
-    description: "Deepening subject conceptualization, scientific temperament, analytical skills, inter-school competitions, and leadership.",
-    features: ["Advanced Integrated Science Labs", "Third Language Options (Sanskrit/French)", "Olympiad Coaching", "Club & House System"],
-    image: "/placeholder.png",
+    description: "Fostering analytical skills, scientific inquiry, and holistic personality development.",
+    features: ["Integrated Science Labs", "Olympiad & Competitive Prep", "Clubs & House System"],
+    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
     iconName: "Brain"
   },
   {
     id: "secondary",
-    title: "Secondary Wing (Class IX - X)",
-    grades: "Grade 9 to 10",
+    title: "Secondary Wing",
+    grades: "Class IX – X",
     ageGroup: "14 - 15 Years",
-    description: "Rigorous CBSE curriculum preparation coupled with career counseling, skill subjects, and intensive academic mentorship.",
-    features: ["Board Examination Preparation", "AI & Information Technology Skill Subjects", "Regular Mock Assessments", "Personalized Counseling"],
-    image: "/placeholder.png",
+    description: "Focused CBSE board preparation, skill courses, and academic mentorship.",
+    features: ["CBSE Board Exam Focus", "AI & IT Skill Courses", "Personalized Counseling"],
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
     iconName: "GraduationCap"
   },
   {
     id: "senior-secondary",
-    title: "Senior Secondary (Class XI - XII)",
-    grades: "Grade 11 to 12",
+    title: "Senior Secondary",
+    grades: "Class XI – XII",
     ageGroup: "16 - 17 Years",
-    description: "Specialized streams in Science, Commerce, and Humanities paired with competitive exam foundation (JEE, NEET, CUET, CLAT).",
-    features: ["Science (PCM / PCB)", "Commerce with Financial Markets", "Humanities & Applied Psychology", "Integrated Test Series"],
-    image: "/placeholder.png",
+    description: "Specialized Science, Commerce, and Humanities streams with entrance prep.",
+    features: ["Science (PCM/PCB), Commerce, Arts", "JEE & NEET Entrance Foundation", "Career & College Guidance"],
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
     iconName: "Award"
   }
 ];
@@ -464,4 +464,236 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   { year: "2019", title: "Smart Classroom Integration", description: "Transformed all 70 classrooms into interactive digital smart rooms with high-speed optic fiber connectivity." },
   { year: "2024", title: "AI & Innovation Wing", description: "Launched state-level AI Research Lab & STEM innovation hub in collaboration with leading technical institutes." },
   { year: "2026", title: "Silver Jubilee Celebration", description: "Celebrating 27+ years of academic distinction, holistic character building, and alumni success across 30+ countries." }
+];
+
+export interface WhyChooseUsItem {
+  id: string;
+  iconName: string;
+  title: string;
+  description: string;
+}
+
+export interface AdmissionStepItem {
+  step: string;
+  title: string;
+  desc: string;
+}
+
+export interface TestimonialItem {
+  id: number;
+  quote: string;
+  parentName: string;
+  role: string;
+  rating: number;
+  avatar: string;
+}
+
+export interface SalientFeatureItem {
+  title: string;
+  desc: string;
+  iconName: string;
+  color: string;
+}
+
+export interface VisionPillarItem {
+  title: string;
+  desc: string;
+  iconName: string;
+  color: string;
+}
+
+export const WHY_CHOOSE_US_DATA: WhyChooseUsItem[] = [
+  {
+    id: "academic",
+    iconName: "Award",
+    title: "Academic Excellence",
+    description: "Consistently delivering 100% CBSE board results with state & national rank holders every single academic year."
+  },
+  {
+    id: "smart-classrooms",
+    iconName: "Laptop",
+    title: "Smart Classrooms",
+    description: "70+ digitally enabled interactive smart rooms with fiber internet, 3D visual modules, and AI learning aids."
+  },
+  {
+    id: "sports",
+    iconName: "Trophy",
+    title: "Sports Infrastructure",
+    description: "5-acre multi-sport complex, synthetic basketball courts, turf football ground, and national-certified athletic coaches."
+  },
+  {
+    id: "faculty",
+    iconName: "Users",
+    title: "Experienced Faculty",
+    description: "180+ highly qualified educators with over 15+ years average teaching mastery, dedicated to student mentorship."
+  },
+  {
+    id: "safety",
+    iconName: "ShieldCheck",
+    title: "Safe & Secure Campus",
+    description: "24x7 CCTV coverage, bio-metric access control, GPS bus fleet tracking, and trained security personnel."
+  },
+  {
+    id: "holistic",
+    iconName: "HeartHandshake",
+    title: "Holistic Development",
+    description: "30+ active student clubs in robotics, public speaking, music, fine arts, Vedic ethics, and community leadership."
+  }
+];
+
+export const ADMISSION_STEPS_DATA: AdmissionStepItem[] = [
+  {
+    step: "01",
+    title: "Enquiry & Campus Tour",
+    desc: "Submit an online enquiry or visit our admissions office for a guided campus walkthrough and counselor interaction."
+  },
+  {
+    step: "02",
+    title: "Registration Form",
+    desc: "Fill out the admission registration form online or offline with basic academic records and birth credentials."
+  },
+  {
+    step: "03",
+    title: "Interaction / Test",
+    desc: "Informal interaction for Pre-Primary, or a baseline aptitude evaluation for Grades 1 to 11."
+  },
+  {
+    step: "04",
+    title: "Confirmation & Welcome",
+    desc: "Receive admission offering letter, complete document verification, fee submission, and uniform kit allotment."
+  }
+];
+
+export const TESTIMONIALS_DATA: TestimonialItem[] = [
+  {
+    id: 1,
+    quote: "Dayanand Arya Vidya Public School has transformed my daughter's confidence. The balance between rigorous academic coaching and traditional values is unmatched in Ranchi.",
+    parentName: "Dr. Vikramaditya Sharma",
+    role: "Parent of Ananya (Class 10 Board Topper)",
+    rating: 5,
+    avatar: "/placeholder.png"
+  },
+  {
+    id: 2,
+    quote: "The teachers are dedicated and caring. The school environment encourages students to achieve their best in academics, sports, and co-curricular activities.",
+    parentName: "Mrs. Neha Kumari",
+    role: "Parent of Aarav (Class 6)",
+    rating: 5,
+    avatar: "/placeholder.png"
+  },
+  {
+    id: 3,
+    quote: "The STEM and AI lab facilities allowed me to build my first robotics project in Grade 9. The guidance from my teachers helped me score AIR 342 in JEE Advanced!",
+    parentName: "Rohan Verma",
+    role: "Alumni (IIT Bombay CS Batch 2025)",
+    rating: 5,
+    avatar: "/placeholder.png"
+  },
+  {
+    id: 4,
+    quote: "The overall discipline and moral environment is outstanding. Teachers focus on developing not only on studies but also on building an all-round personality in every child.",
+    parentName: "Dr. Ananya Sinha",
+    role: "Parent of Rohan (Class 8)",
+    rating: 5,
+    avatar: "/placeholder.png"
+  },
+  {
+    id: 5,
+    quote: "As a working parent, the GPS-tracked bus facility and real-time mobile app updates give me complete peace of mind while my son is at school.",
+    parentName: "Sunita Roy",
+    role: "Parent of Priyansh (Grade 4)",
+    rating: 5,
+    avatar: "/placeholder.png"
+  }
+];
+
+export const SALIENT_FEATURES_DATA: SalientFeatureItem[] = [
+  {
+    title: "Child-Oriented Methodology",
+    desc: "Imparting child-oriented education with innovative and interactive methodology.",
+    iconName: "BrainCircuit",
+    color: "bg-orange-100 text-orange-600"
+  },
+  {
+    title: "Congenial Atmosphere",
+    desc: "Creating healthy and congenial atmosphere to generate love for knowledge in the child.",
+    iconName: "Sparkles",
+    color: "bg-amber-100 text-amber-600"
+  },
+  {
+    title: "Comprehensive Syllabus & CCE",
+    desc: "Implementation of comprehensive and composite syllabus with continuous evaluation system.",
+    iconName: "BookOpen",
+    color: "bg-emerald-100 text-emerald-600"
+  },
+  {
+    title: "Highest Order Discipline",
+    desc: "Discipline of highest order in every sphere of activities.",
+    iconName: "ShieldCheck",
+    color: "bg-blue-100 text-blue-600"
+  },
+  {
+    title: "Noble Moral & Aesthetic Values",
+    desc: "Inculcating noble, moral and aesthetic values into the character of the children for shaping them up as ideal citizens.",
+    iconName: "HeartHandshake",
+    color: "bg-purple-100 text-purple-600"
+  },
+  {
+    title: "Continuous Faculty Training",
+    desc: "Periodic orientation programs and subject workshops for educators.",
+    iconName: "Users",
+    color: "bg-rose-100 text-rose-600"
+  }
+];
+
+export interface EligibilityItem {
+  grade: string;
+  minAge: string;
+  cutoff: string;
+  criteria: string;
+}
+
+export const ELIGIBILITY_DATA: EligibilityItem[] = [
+  { grade: "Nursery", minAge: "3+ Years", cutoff: "Born on or before 31st March 2023", criteria: "Informal Parent-Child Interaction" },
+  { grade: "LKG & UKG", minAge: "4+ to 5+ Years", cutoff: "Born on or before 31st March 2022", criteria: "Sensory & Verbal Assessment" },
+  { grade: "Grade 1 - 5", minAge: "6+ to 10+ Years", cutoff: "Previous Class Pass Marksheet", criteria: "Baseline Aptitude Test (Eng & Math)" },
+  { grade: "Grade 6 - 9", minAge: "11+ to 14+ Years", cutoff: "Grade 5/8 Passed from Recognized School", criteria: "Written Test (Eng, Math, Science)" },
+  { grade: "Grade 11 (Sci/Comm/Arts)", minAge: "15+ Years", cutoff: "CBSE Class 10 Board Percentage Criteria", criteria: "Class 10 Board Marks + Aptitude Cutoff" },
+];
+
+export const REQUIRED_DOCUMENTS_DATA: string[] = [
+  "Attested copy of Child's Birth Certificate issued by Municipal Corporation",
+  "Original Transfer Certificate (TC) countersigned by Education Inspector (Grade 2 upwards)",
+  "Report Card / Marksheet of previous class passed",
+  "Aadhaar Card copy of Student and Parents (Mother & Father)",
+  "4 recent passport-size color photographs of Child and 2 of Parents",
+  "Blood Group & Immunization Medical Certificate signed by Registered Medical Practitioner",
+  "Caste / Category Certificate (if applying under SC/ST/OBC category)"
+];
+export interface VisionPillarItem {
+  title: string;
+  desc: string;
+  iconName: string;
+  color: string;
+}
+
+export const VISION_PILLARS_DATA: VisionPillarItem[] = [
+  {
+    title: "Modern Scientific Pedagogy",
+    desc: "Combining interactive teaching methods, critical problem-solving, and continuous evaluation for academic success.",
+    iconName: "Compass",
+    color: "bg-orange-100 text-orange-600"
+  },
+  {
+    title: "Timeless Vedic Values",
+    desc: "Instilling moral integrity, discipline (Anushasan), truthfulness (Satya), and service (Sewa) in every learner.",
+    iconName: "ShieldCheck",
+    color: "bg-amber-100 text-amber-600"
+  },
+  {
+    title: "State-of-the-Art STEM",
+    desc: "Equipping students with modern computer labs, smart classrooms, and experimental science facilities.",
+    iconName: "GraduationCap",
+    color: "bg-emerald-100 text-emerald-600"
+  }
 ];

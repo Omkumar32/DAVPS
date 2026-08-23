@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyAdminCredentials, DEFAULT_ADMIN } from "@/lib/prisma";
-import { setAdminSession, clearAdminSession, getAdminSession } from "@/lib/auth";
+import { setAdminSession, clearAdminSession, getAdminSession, verifyAdminCredentials, DEFAULT_ADMIN } from "@/lib/auth";
 
 export async function GET(req: Request) {
   const session = await getAdminSession();

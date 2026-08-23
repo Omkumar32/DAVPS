@@ -20,13 +20,11 @@ const NAV_LINKS = [
 ];
 
 const ABOUT_SUB_TABS = [
-  { name: "About Us", href: "/about" },
+  { name: "School Overview", href: "/about" },
   { name: "General Information", href: "/general-information" },
-  { name: "Principal Message", href: "/principal-message" },
   { name: "Director Message", href: "/director-message" },
-  { name: "Mission & Vision", href: "/about#mission-vision" },
-  { name: "Management", href: "/about#management" },
-  { name: "Curriculum", href: "/about#curriculum" },
+  { name: "Principal Message", href: "/principal-message" },
+  { name: "Curriculum", href: "/academics" },
   { name: "Faculty", href: "/faculty" },
   { name: "Mandatory Public Disclosure", href: "/mandatory-public-disclosure" },
 ];

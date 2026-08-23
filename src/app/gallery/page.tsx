@@ -5,18 +5,20 @@ import Image from "next/image";
 import PageHeader from "@/components/shared/PageHeader";
 import SectionHeading from "@/components/shared/SectionHeading";
 import LightboxModal from "@/components/ui/LightboxModal";
-import { GALLERY_DATA, GalleryItem } from "@/data/schoolData";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { GalleryItem } from "@/data/schoolData";
 import { Maximize2, Tag, Calendar } from "lucide-react";
 
 const CATEGORIES = ["All", "Campus", "Events", "Sports", "Academics", "Celebrations", "CBSE Events"] as const;
 
 export default function GalleryPage() {
+  const { gallery } = useSiteSettings();
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
   const filteredItems = activeCategory === "All"
-    ? GALLERY_DATA
-    : GALLERY_DATA.filter((item) => item.category === activeCategory);
+    ? gallery
+    : gallery.filter((item) => item.category === activeCategory);
 
   const handlePrev = () => {
     if (!selectedImage) return;

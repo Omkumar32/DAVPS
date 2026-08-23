@@ -4,16 +4,18 @@ import { useState } from "react";
 import Image from "next/image";
 import PageHeader from "@/components/shared/PageHeader";
 import SectionHeading from "@/components/shared/SectionHeading";
-import { NEWS_EVENTS_DATA, NewsItem } from "@/data/schoolData";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { NewsItem } from "@/data/schoolData";
 import { Calendar, Search, Clock, User, ChevronRight, X, CheckCircle2, Send } from "lucide-react";
 
 export default function NewsEventsPage() {
+  const { news } = useSiteSettings();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
 
-  const filteredNews = NEWS_EVENTS_DATA.filter((item) => {
+  const filteredNews = news.filter((item) => {
     const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           item.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;

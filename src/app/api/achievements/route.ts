@@ -101,6 +101,27 @@ export async function POST(req: Request) {
   }
 }
 
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const { id, ...updates } = body;
+
+    if (!id) {
+      return NextResponse.json({ success: false, message: "Achievement ID is required" }, { status: 400 });
+    }
+
+    const updated = await prisma.achievement.update({
+      where: { id },
+      data: updates,
+    });
+
+    return NextResponse.json({ success: true, achievement: updated });
+  } catch (error) {
+    console.error("Error updating achievement in DB:", error);
+    return NextResponse.json({ success: false, message: "Failed to update achievement" }, { status: 500 });
+  }
+}
+
 export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
