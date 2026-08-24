@@ -112,16 +112,16 @@ export default function HomePage() {
   return (
     <div className="space-y-10 sm:space-y-12 pb-16 bg-white">
       
-      {/* 1. SINGLE-SCREEN HERO BANNER (Matches 88px navbar) */}
-      <section className="relative w-full h-[calc(100vh-88px)] flex flex-col justify-between bg-slate-50 border-b border-slate-200 overflow-hidden shrink-0">
+      {/* 1. SINGLE-SCREEN HERO BANNER (Matches 88px navbar on desktop, compact on mobile) */}
+      <section className="relative w-full h-auto md:h-[calc(100vh-88px)] flex flex-col justify-between bg-slate-50 border-b border-slate-200 overflow-hidden shrink-0">
         
         {/* Title Area */}
-        <div className="pt-3 sm:pt-4 pb-1 px-4 text-center shrink-0 z-20">
+        <div className="pt-3 sm:pt-4 pb-2 px-3 sm:px-4 text-center shrink-0 z-20">
           <div className="max-w-5xl mx-auto space-y-1">
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight uppercase font-sans leading-none">
+            <h1 className="text-xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight uppercase font-sans leading-none">
               {settings.heroTitle}
             </h1>
-            <div className="text-xs sm:text-sm font-extrabold text-slate-800 tracking-wide uppercase leading-tight space-y-0.5">
+            <div className="text-[11px] sm:text-sm font-extrabold text-slate-800 tracking-wide uppercase leading-tight space-y-0.5">
               {settings.heroSubhead.split('\n').map((line, idx) => (
                 <p key={idx}>{line}</p>
               ))}
@@ -129,21 +129,21 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Flex-1 Campus Image Container */}
-        <div className="relative flex-1 w-full overflow-hidden my-auto bg-slate-50 flex items-center justify-center">
+        {/* Campus Image Container (Fixed responsive height on mobile to prevent excessive whitespace gap, flex-1 on desktop) */}
+        <div className="relative w-full h-[240px] xs:h-[280px] sm:h-[360px] md:h-full md:flex-1 overflow-hidden my-auto bg-slate-50 flex items-center justify-center">
           {settings.heroImage && settings.heroImage !== "/placeholder.png" && !heroImgError ? (
-            /* Render uploaded image with object-contain object-top */
+            /* Render uploaded image with object-cover on mobile for crisp fill, object-cover object-top on desktop */
             <img
               src={settings.heroImage}
               alt="Dayanand Arya Vidya Public School Building"
-              className="w-full h-full object-contain md:object-cover object-top"
+              className="w-full h-full object-cover object-center md:object-top"
               onError={() => setHeroImgError(true)}
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-8 text-center">
-              <Building2 className="w-16 h-16 mb-2 opacity-50" />
-              <p className="text-sm font-medium">Hero Image Not Uploaded Yet</p>
-              <p className="text-xs text-slate-400">Upload a Hero Banner photo from Admin CMS</p>
+            <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-6 text-center">
+              <Building2 className="w-12 h-12 sm:w-16 sm:h-16 mb-2 opacity-50" />
+              <p className="text-xs sm:text-sm font-medium">Hero Image Not Uploaded Yet</p>
+              <p className="text-[10px] sm:text-xs text-slate-400">Upload a Hero Banner photo from Admin CMS</p>
             </div>
           )}
 
@@ -160,17 +160,17 @@ export default function HomePage() {
           </div>
 
           {/* Action Overlay Buttons at Bottom Center of Image */}
-          <div className="absolute bottom-4 left-0 right-0 z-20 flex items-center justify-center gap-3 px-4">
+          <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 z-20 flex items-center justify-center gap-2 sm:gap-3 px-3 sm:px-4">
             <Link
               href="/admissions"
-              className="px-6 py-2.5 sm:px-8 sm:py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider bg-orange-600 hover:bg-orange-700 text-white shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+              className="px-4 py-2 sm:px-8 sm:py-3 rounded-xl text-[11px] sm:text-sm font-black uppercase tracking-wider bg-orange-600 hover:bg-orange-700 text-white shadow-xl hover:scale-105 transition-all flex items-center gap-1.5"
             >
               <span>Apply for Admission</span>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </Link>
             <a
               href="#contact-section"
-              className="px-6 py-2.5 sm:px-8 sm:py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider bg-slate-900/90 hover:bg-slate-900 text-white shadow-xl backdrop-blur-md hover:scale-105 transition-all"
+              className="px-4 py-2 sm:px-8 sm:py-3 rounded-xl text-[11px] sm:text-sm font-black uppercase tracking-wider bg-slate-900/90 hover:bg-slate-900 text-white shadow-xl backdrop-blur-md hover:scale-105 transition-all"
             >
               Book Campus Visit
             </a>
